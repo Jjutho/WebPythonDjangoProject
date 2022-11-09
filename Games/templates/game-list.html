@@ -1,23 +1,44 @@
-{% extends "base.html" %}
+{% extends "home.html" %}
 
 {% block title %}
     All Games
+{% endblock %}
+
+{% block css %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'Games/game_styles.css' %}">
 {% endblock %}
 
 {% block heading %}
     <h1>All Games</h1>
 {% endblock %}
 
-{% block content %}
-    {% for game in all_the_games %}
-        <h3>{{ game.title }}</h3>
-        <ul>
-            <li>Release date: {{ game.release_date }}</li>
-            <li>Game Creator: {{ game.creator }}</li>
-            <li>Genre: {{ game.genre }}</li>
-            <li>Age rating: {{ game.age_rating }}</li>
-        </ul>
-        <p>{{ game.description }}</p>
-    {% endfor %}
-    <p><a href="{% url 'game-create' %}">Add a new game</a></p>
+{% block logged_in_content %}
+    <div class="games-container">
+        {% for game in all_the_games %}
+            <div class="game-card">
+                <h3>{{ game.title }}</h3>
+                <ul>
+                    <li>Release date: {{ game.release_date }}</li>
+                    <li>Game Creator: {{ game.creator }}</li>
+                    <li>Genre: {{ game.get_genre_display }}</li>
+                    <li>Age rating: {{ game.age_rating }}</li>
+                </ul>
+                <p>{{ game.description }}</p>
+                <p><a class="button primary" href="{{ game.id }}/">View Details</a></p>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="button-container">
+        <a class="button primary" href="{% url 'game-create' %}">Add a new game</a>
+        <a class="button secondary" href="{% url 'home' %}">Back to Home</a>
+    </div>
+{% endblock %}
+
+{% block not_logged_in_content %}
+    <h2>You must be logged in to view games.</h2>
+    <div class="button-container">
+        <a class="button primary" hhref="{% url 'login' %}">Login</a>
+        <a class="button secondary" hhref="{% url 'home' %}">Back to Home</a>
+    </div>
 {% endblock %}

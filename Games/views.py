@@ -27,4 +27,5 @@ class GameCreateView(CreateView):
 class GameDeleteView(DeleteView):
     model = Game
     template_name = 'game-delete.html'
+    context_object_name = 'that_one_game'
     success_url = reverse_lazy('game-list')

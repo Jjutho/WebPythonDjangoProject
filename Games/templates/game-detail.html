@@ -1,10 +1,39 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "home.html" %}
 
-</body>
-</html>
+{% block title %}
+    {{ that_one_game.title }}
+{% endblock %}
+
+{% block css %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'Games/game_styles.css' %}">
+{% endblock %}
+
+{% block heading %}
+    <h1>{{ that_one_game.title }}</h1>
+{% endblock %}
+
+{% block logged_in_content %}
+    <h2>Game Information:</h2>
+    <ul>
+        <li>Release date: {{ that_one_game.release_date }}</li>
+        <li>Game Creator: {{ that_one_game.creator }}</li>
+        <li>Genre: {{ that_one_game.get_genre_display }}</li>
+        <li>Age rating: {{ that_one_game.age_rating }}</li>
+    </ul>
+    <p>{{ that_one_game.description }}</p>
+    <p>Uploaded by: {{ that_one_game.user }} at {{ that_one_game.upload_date }}</p>
+    <p><a class="button primary" href="{% url 'game-delete' that_one_game.id %}">Delete Game</a></p>
+    <div class="button-container">
+        <a class="button secondary" href="{% url 'game-list' %}">Back to all games</a>
+        <a class="button secondary" href="{% url 'home' %}">Back to Home</a>
+    </div>
+{% endblock %}
+
+{% block not_logged_in_content %}
+    <h2>You must be logged in to view this game.</h2>
+    <div class="button-container">
+        <a class="button primary" hhref="{% url 'login' %}">Login</a>
+        <a class="button secondary" hhref="{% url 'home' %}">Back to Home</a>
+    </div>
+{% endblock %}

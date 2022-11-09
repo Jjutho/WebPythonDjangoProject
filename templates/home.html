@@ -2,6 +2,9 @@
 
 {% block title %}Django Project{% endblock %}
 
+{% block css %}
+{% endblock %}
+
 {% block heading %}
     <h1>Welcome!</h1>
 {% endblock %}
@@ -10,14 +13,18 @@
     {% if user.is_authenticated %}
         {% block logged_in_content %}
             <h2>Hello {{ user.username }}</h2>
-            <p><a href="{% url 'game-list' %}">Show me the games</a></p>
-            <p><a href="{% url 'logout' %}">Logout</a></p>
+            <div class="button-container">
+                <a class="button primary" href="{% url 'game-list' %}">Show me the games</a>
+                <a class="button secondary" href="{% url 'logout' %}">Logout</a>
+            </div>
         {% endblock %}
     {% else %}
         {% block not_logged_in_content %}
             <h2>You shall not pass</h2>
-            <p><a href="{% url 'login' %}">Login</a></p>
-            <p><a href="{% url 'signup' %}">Sign Up</a></p>
+            <div class="button-container">
+                <a class="button primary" href="{% url 'login' %}">Login</a>
+                <a class="button secondary" href="{% url 'signup' %}">Sign Up</a>
+            </div>
         {% endblock %}
     {% endif %}
 {% endblock %}

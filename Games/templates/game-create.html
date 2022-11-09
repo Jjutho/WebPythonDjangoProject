@@ -4,6 +4,11 @@
     Add Game
 {% endblock %}
 
+{% block css %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'Games/game_styles.css' %}">
+{% endblock %}
+
 {% block heading %}
     <h1>Add Game</h1>
 {% endblock %}
@@ -13,11 +18,17 @@
     <form method="POST">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Add Game</button>
+        <div class="button-container">
+            <button class="button primary" type="submit">Add Game</button>
+            <a class="button secondary" href="{% url 'game-list' %}">Back to all games</a>
+        </div>
     </form>
 {% endblock %}
 
 {% block not_logged_in_content %}
     <h2>You must be logged in to add games.</h2>
-    <p><a href="{% url 'login' %}">Login</a></p>
+    <div class="button-container">
+        <a class="button primary" hhref="{% url 'login' %}">Login</a>
+        <a class="button secondary" hhref="{% url 'home' %}">Back to Home</a>
+    </div>
 {% endblock %}

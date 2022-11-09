@@ -1,0 +1,75 @@
+body {
+    color: #343434;
+    max-width: 900px;
+    margin: auto;
+    padding: 20px;
+}
+
+h1,
+h2,
+h3 {
+    font-family: "Montserrat Subrayada";
+}
+
+h1 {
+    font-size: 3em;
+    letter-spacing: 0.1em;
+    font-weight: 900;
+}
+
+h2 {
+    font-size: 2.4em;
+    font-weight: 600;
+}
+
+h3 {
+    font-size: 2em;
+    font-weight: 400;
+}
+
+li,
+p {
+    font-size: 1em;
+    font-family: "Open Sans";
+}
+
+p {
+    max-width: 600px;
+}
+
+.button {
+    font-family: "Open Sans";
+    padding: 14px 34px;
+    font-size: 1em;
+    font-weight: 500;
+    border-radius: 10px;
+    border-width: 1px;
+    border-style:solid;
+    border-color: #343434;
+    color: #343434;
+    text-decoration: none;
+    transition: .3s ease-in-out;
+    will-transform: background;
+    cursor: pointer;
+}
+
+.primary {
+    background: beige;
+}
+.primary:hover {
+    background: #fff;
+}
+
+.secondary {
+    background: #fff;
+}
+.secondary:hover {
+    background: beige;
+}
+
+.button-container {
+    display: flex;
+    flex-direction: row;
+    gap: 25px;
+    margin: 25px 0;
+}

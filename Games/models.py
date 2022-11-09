@@ -7,7 +7,7 @@ class Game(models.Model):
     class GameGenre(models.TextChoices):
         FIRSTPERSONSHOOTER = 'FPS', _('First Person Shooter')
         SIMULATION = 'SIM', _('Simulation')
-        CITEBUILDER = 'CB', _('City Builder')
+        CITYBUILDER = 'CB', _('City Builder')
         HORRORGAME = 'HG', _('Horror Game')
         ROLEPLAYINGGAME = 'RPG', _('Role Playing Game')
         RACINGGAME = 'RC', _('Racing Game')
