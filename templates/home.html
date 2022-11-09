@@ -3,18 +3,23 @@
 {% block title %}Django Project{% endblock %}
 
 {% block heading %}
-    {% if user.is_authenticated %}
-        <h1>Welcome {{ user.username }}</h1>
-        <p><a href="{% url 'logout' %}">Logout</a></p>
-    {% else %}
-        <h1>You shall not pass</h1>
-        <p><a href="{% url 'login' %}">Login</a></p>
-        <p><a href="{% url 'signup' %}">Sign Up</a></p>
-    {% endif %}
+    <h1>Welcome!</h1>
 {% endblock %}
 
 {% block content %}
-    <p style="max-width:600px">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    {% if user.is_authenticated %}
+        {% block logged_in_content %}
+            <h2>Hello {{ user.username }}</h2>
+            <p><a href="{% url 'game-list' %}">Show me the games</a></p>
+            <p><a href="{% url 'logout' %}">Logout</a></p>
+        {% endblock %}
+    {% else %}
+        {% block not_logged_in_content %}
+            <h2>You shall not pass</h2>
+            <p><a href="{% url 'login' %}">Login</a></p>
+            <p><a href="{% url 'signup' %}">Sign Up</a></p>
+        {% endblock %}
+    {% endif %}
 {% endblock %}
 
 

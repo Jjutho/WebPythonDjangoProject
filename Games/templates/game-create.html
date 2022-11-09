@@ -1,0 +1,23 @@
+{% extends "home.html" %}
+
+{% block title %}
+    Add Game
+{% endblock %}
+
+{% block heading %}
+    <h1>Add Game</h1>
+{% endblock %}
+
+{% block logged_in_content %}
+    <h2>Please fill out the fields.</h2>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Add Game</button>
+    </form>
+{% endblock %}
+
+{% block not_logged_in_content %}
+    <h2>You must be logged in to add games.</h2>
+    <p><a href="{% url 'login' %}">Login</a></p>
+{% endblock %}

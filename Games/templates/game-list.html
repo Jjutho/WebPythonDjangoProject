@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}
+    All Games
+{% endblock %}
+
+{% block heading %}
+    <h1>All Games</h1>
+{% endblock %}
+
+{% block content %}
+    {% for game in all_the_games %}
+        <h3>{{ game.title }}</h3>
+        <ul>
+            <li>Release date: {{ game.release_date }}</li>
+            <li>Game Creator: {{ game.creator }}</li>
+            <li>Genre: {{ game.genre }}</li>
+            <li>Age rating: {{ game.age_rating }}</li>
+        </ul>
+        <p>{{ game.description }}</p>
+    {% endfor %}
+    <p><a href="{% url 'game-create' %}">Add a new game</a></p>
+{% endblock %}
