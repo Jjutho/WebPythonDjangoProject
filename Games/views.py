@@ -7,10 +7,10 @@ def game_list(request):
     context = {'all_the_games': all_games}
     return render(request, 'game-list.html', context)
 
-def game_list(request, **kwargs):
+def game_detail(request, **kwargs):
     game_id = kwargs['pk']
     that_one_game = Game.objects.get(id=game_id)
-    context = {'that_one_computer', that_one_game}
+    context = {'that_one_game': that_one_game}
     return render(request, 'game-detail.html', context)
 
 def game_create(request):
@@ -21,10 +21,18 @@ def game_create(request):
             form.save()
         else:
             pass
-
         return redirect('game-list')
     else:
         form = GameForm()
         context = {'form': form}
         return render(request, 'game-create.html', context)
 
+def game_delete(request, **kwargs):
+    game_id = kwargs['pk']
+    that_one_game = Game.objects.get(id=game_id)
+    if request.method == 'POST':
+        that_one_game.delete()
+        return redirect('game-list')
+    else:
+        context = {'that_one_game': that_one_game}
+        return render(request, 'game-delete.html', context)
