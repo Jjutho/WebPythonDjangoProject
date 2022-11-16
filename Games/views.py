@@ -1,31 +1,30 @@
-from django.shortcuts import render
-from django.urls import reverse_lazy
-from django.views.generic import CreateView, DetailView, ListView, DeleteView
+from django.shortcuts import render, redirect
 from .forms import GameForm
 from .models import Game
 
-class GameListView(ListView):
-    model = Game
-    context_object_name = 'all_the_games'
-    template_name = 'game-list.html'
+def game_list(request):
+    all_games = Game.objects.all()
+    context = {'all_the_games': all_games}
+    return render(request, 'game-list.html', context)
 
-class GameDetailView(DetailView):
-    model = Game
-    context_object_name = 'that_one_game'
-    template_name = 'game-detail.html'
+def game_list(request, **kwargs):
+    game_id = kwargs['pk']
+    that_one_game = Game.objects.get(id=game_id)
+    context = {'that_one_computer', that_one_game}
+    return render(request, 'game-detail.html', context)
 
-class GameCreateView(CreateView):
-    model = Game
-    form_class = GameForm
-    template_name = 'game-create.html'
-    success_url = reverse_lazy('game-list')
+def game_create(request):
+    if request.method == 'POST':
+        form = GameForm(request.POST)
+        form.instance.user = request.user
+        if form.is_valid():
+            form.save()
+        else:
+            pass
 
-    def form_valid(self, form):
-        form.instance.user = self.request.user
-        return super().form_valid(form)
+        return redirect('game-list')
+    else:
+        form = GameForm()
+        context = {'form': form}
+        return render(request, 'game-create.html', context)
 
-class GameDeleteView(DeleteView):
-    model = Game
-    template_name = 'game-delete.html'
-    context_object_name = 'that_one_game'
-    success_url = reverse_lazy('game-list')
