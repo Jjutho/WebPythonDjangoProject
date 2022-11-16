@@ -14,19 +14,22 @@
 {% endblock %}
 
 {% block logged_in_content %}
-    <h2>Game Information:</h2>
-    <ul>
-        <li>Release date: {{ that_one_game.release_date }}</li>
-        <li>Game Creator: {{ that_one_game.creator }}</li>
-        <li>Genre: {{ that_one_game.get_genre_display }}</li>
-        <li>Age rating: {{ that_one_game.age_rating }}</li>
-    </ul>
-    <p>{{ that_one_game.description }}</p>
-    <p>Uploaded by: {{ that_one_game.user }} at {{ that_one_game.upload_date }}</p>
-    <p><a class="button primary" href="{% url 'game-delete' that_one_game.id %}">Delete Game</a></p>
-    <div class="button-container">
-        <a class="button secondary" href="{% url 'game-list' %}">Back to all games</a>
-        <a class="button secondary" href="{% url 'home' %}">Back to Home</a>
+    <div class="game-detail-content">
+        <h2>Game Information:</h2>
+        <ul>
+            <li>Release date: {{ that_one_game.release_date }}</li>
+            <li>Game Creator: {{ that_one_game.creator }}</li>
+            <li>Genre: {{ that_one_game.get_genre_display }}</li>
+            <li>Age rating: {{ that_one_game.age_rating }}</li>
+        </ul>
+        <h4>Description:</h4>
+        <p class="game-detail-description">{{ that_one_game.description }}</p>
+        <p class="game-detail-upload-date">Uploaded by: {{ that_one_game.user }} at {{ that_one_game.upload_date }}</p>
+        <p class="button-delete-container"><a class="button primary button-delete" href="{% url 'game-delete' that_one_game.id %}">Delete Game</a></p>
+        <div class="button-container">
+            <a class="button secondary button-back" href="{% url 'game-list' %}">Back to all games</a>
+            <a class="button secondary button-back-list" href="{% url 'home' %}">Back to Home</a>
+        </div>
     </div>
 {% endblock %}
 

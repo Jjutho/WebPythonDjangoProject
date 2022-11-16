@@ -37,7 +37,8 @@ p {
     max-width: 600px;
 }
 
-.button {
+.button,
+button {
     font-family: "Open Sans";
     padding: 14px 34px;
     font-size: 1em;

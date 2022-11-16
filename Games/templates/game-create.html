@@ -14,15 +14,43 @@
 {% endblock %}
 
 {% block logged_in_content %}
-    <h2>Please fill out the fields.</h2>
-    <form method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <div class="button-container">
-            <button class="button primary" type="submit">Add Game</button>
-            <a class="button secondary" href="{% url 'game-list' %}">Back to all games</a>
-        </div>
-    </form>
+    <div class="game-create-content">
+        <h2>Please fill out the fields.</h2>
+        <form method="POST">
+            {% csrf_token %}
+
+            <label for="{{ form.title.id_for_label }}">Title of the game</label><br>
+            <input id="{{ form.title.id_for_label }}" type="{{ form.title.field.widget.input_type }}" name="{{ form.title.html_name }}" placeholder="Game title"><br>
+
+            <label for="{{ form.creator.id_for_label }}">Developer/Game Studio</label><br>
+            <input id="{{ form.creator.id_for_label }}" type="{{ form.creator.field.widget.input_type }}" name="{{ form.creator.html_name }}" placeholder="Developer/Game Studio"><br>
+
+            <label for="{{ form.description.id_for_label }}">{{ form.description.label }}</label><br>
+            {{ form.description }}<br>
+
+            <label for="id_genre">Genre of the game</label><br>
+            <select id="id_genre" type="text" name="genre">
+                <option value="">---</option>
+                <option value="FPS">First Person Shooter</option>
+                <option value="SIM">Simulation</option>
+                <option value="CB">City Builder</option>
+                <option value="HG">Horror Game</option>
+                <option value="RPG">Role Playing Game</option>
+                <option value="RC">Racing Game</option>
+            </select><br>
+
+            <label for="{{ form.age_rating.id_for_label }}">{{ form.age_rating.label }}</label><br>
+            {{ form.age_rating }}<br>
+
+            <label for="{{ form.releas_date.id_for_label }}">{{ form.release_date.label }}</label><br>
+            {{ form.release_date }}<br>
+
+            <div class="button-container">
+                <button class="button primary" type="submit">Add Game</button>
+                <a class="button secondary" href="{% url 'game-list' %}">Back to all games</a>
+            </div>
+        </form>
+    </div>
 {% endblock %}
 
 {% block not_logged_in_content %}

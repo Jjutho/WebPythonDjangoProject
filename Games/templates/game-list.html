@@ -24,7 +24,8 @@
                     <li>Genre: {{ game.get_genre_display }}</li>
                     <li>Age rating: {{ game.age_rating }}</li>
                 </ul>
-                <p>{{ game.description }}</p>
+                <h4>Description:</h4>
+                <p class="game-card-description">{{ game.description }}</p>
                 <p><a class="button primary" href="{% url 'game-detail' game.id %}">View Details</a></p>
             </div>
         {% endfor %}
