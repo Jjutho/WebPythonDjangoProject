@@ -1,6 +1,6 @@
 body {
     color: #343434;
-    max-width: 900px;
+    max-width: 1040px;
     margin: auto;
     padding: 20px;
 }
@@ -9,6 +9,7 @@ h1,
 h2,
 h3 {
     font-family: "Montserrat Subrayada";
+    margin-top:0px;
 }
 
 h1 {

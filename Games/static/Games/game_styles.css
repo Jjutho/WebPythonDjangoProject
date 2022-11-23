@@ -42,6 +42,16 @@
 /* GAME DETAIL */
 
 .game-detail-content {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    column-gap: 50px;
+}
+
+.left-column {
+
+}
+
+.right-column {
 
 }
 
@@ -56,12 +66,48 @@
 
 .game-detail-upload-date {
     margin-bottom: 60px;
-    font-style: italic;
 }
 
 .game-detail-content .button-delete-container {
     margin-bottom: 60px;
 }
+
+/* GAME-DETAIL: COMMENTS */
+.comments-list {
+    list-style: none;
+    padding-left:0;
+}
+
+.comment-list-element {
+    margin-bottom: 40px;
+}
+
+.comments-heading {
+    margin-top:0;
+}
+
+.comment-text {
+    border: 1px solid;
+    border-radius: 10px 10px 10px 0px;
+    padding: 20px;
+}
+
+.delete-link {
+    color: red;
+    text-decoration: none;
+    font-size:0.9em;
+}
+.delete-link:hover {
+    text-decoration: underline;
+}
+
+label[for="id_text"] {
+    display:none;
+}
+textarea[name="text"] {
+    width:100%;
+}
+
 
 /* FORM STYLES */
 .game-create-content input,
