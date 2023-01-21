@@ -24,6 +24,7 @@ class Game(models.Model):
     description = models.TextField()
     creator = models.CharField(max_length=100)
     release_date = models.DateTimeField(blank=True, default=datetime.now)
+    cover_image = models.ImageField(upload_to='media/images/games', default='')
 
     # Game genre and age rating
     genre = models.CharField(max_length=3, choices=GameGenre.choices)

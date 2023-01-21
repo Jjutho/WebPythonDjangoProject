@@ -16,7 +16,7 @@
 {% block logged_in_content %}
     <div class="game-create-content">
         <h2>Please fill out the fields.</h2>
-        <form method="POST">
+        <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
 
             <label for="{{ form.title.id_for_label }}">Title of the game</label><br>

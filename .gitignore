@@ -7,6 +7,9 @@ db.sqlite3-journal
 # pyenv
 .python-version
 
+#DB
+/migrations/
+
 # Environments
 .env
 .venv
@@ -24,7 +27,7 @@ venv.bak/
 *.log
 *.pot
 *.pyc
-Games/__pycache__/*.pyc
+/__pycache__/
 local_settings.py
 db.sqlite3
 media
