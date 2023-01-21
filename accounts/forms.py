@@ -15,4 +15,7 @@ class UserChangeForm(UserChangeForm):
 
     class Meta(UserChangeForm):
         model = CustomUser
-        fields = ('username', 'password', 'birth_date', 'profile_picture')
+        fields = ['username', 'birth_date', 'profile_picture']
+        widgets = {
+            'birth_date': forms.DateInput(format='%d.%m.%Y')
+        }
