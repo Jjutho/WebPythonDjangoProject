@@ -6,7 +6,7 @@
 
 {% block css %}
     {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'Games/game_styles.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'Games/css/game_styles.css' %}">
 {% endblock %}
 
 {% block heading %}
@@ -14,19 +14,56 @@
 {% endblock %}
 
 {% block logged_in_content %}
-    <h2>Game Information:</h2>
-    <ul>
-        <li>Release date: {{ that_one_game.release_date }}</li>
-        <li>Game Creator: {{ that_one_game.creator }}</li>
-        <li>Genre: {{ that_one_game.get_genre_display }}</li>
-        <li>Age rating: {{ that_one_game.age_rating }}</li>
-    </ul>
-    <p>{{ that_one_game.description }}</p>
-    <p>Uploaded by: {{ that_one_game.user }} at {{ that_one_game.upload_date }}</p>
-    <p><a class="button primary" href="{% url 'game-delete' that_one_game.id %}">Delete Game</a></p>
-    <div class="button-container">
-        <a class="button secondary" href="{% url 'game-list' %}">Back to all games</a>
-        <a class="button secondary" href="{% url 'home' %}">Back to Home</a>
+    <div class="game-detail-content">
+        <div class="left-column">
+            <h2>Game Information:</h2>
+            <img src="{{ that_one_game.cover_image.url }}">
+            <ul>
+                <li>Release date: {{ that_one_game.release_date }}</li>
+                <li>Game Creator: {{ that_one_game.creator }}</li>
+                <li>Genre: {{ that_one_game.get_genre_display }}</li>
+                <li>Age rating: {{ that_one_game.age_rating }}</li>
+            </ul>
+            <h4>Description:</h4>
+            <p class="game-detail-description">{{ that_one_game.description }}</p>
+            <p class="game-detail-upload-date">Uploaded by: <i>{{ that_one_game.user }}</i> at <i>{{ that_one_game.upload_date }}</i></p>
+            <p class="button-delete-container"><a class="button primary button-delete" href="{% url 'game-delete' that_one_game.id %}">Delete Game</a></p>
+            <div class="button-container">
+                <a class="button secondary button-back" href="{% url 'game-list' %}">Back to all games</a>
+                <a class="button secondary button-back-list" href="{% url 'home' %}">Back to Home</a>
+            </div>
+        </div>
+        <div class="right-column">
+            <h4 class="comments-heading">Comments:</h4>
+            <div class="comments-container">
+                <ul class="comments-list">
+                    {% for comment in comments_for_that_one_game %}
+                        <li class="comment-list-element">
+                            <div>
+                                <p class="comment-text">{{ comment.text }}</p>
+                                <p class="comment-meta">By <i>{{ comment.user.username }}</i> on <i>{{ comment.timestamp }}</i>{% if user.username == comment.user.username %} <a class="delete-link" href="{% url 'comment-delete' that_one_game.id comment.id %}">Delete comment</a>{% endif %}</p>
+                                <div class="comment-votes">
+                                      <span style="color:darkgreen">
+                                          {{ comment.get_upvotes_count }}
+                                          <a href="{% url 'comment-vote' that_one_game.id comment.id 'up' %}">up</a>
+                                      </span>
+                                      <span style="color:crimson">
+                                          {{ comment.get_downvotes_count }}
+                                          <a href="{% url 'comment-vote' that_one_game.id comment.id 'down' %}">down</a>
+                                      </span>
+                                </div>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+                <b>Do you want to leave a comment?</b>
+                <form method="POST">
+                    {% csrf_token %}
+                    {{ comment_form.as_p }}
+                    <button class="button primary button-submit-comment" type="submit">Add comment</button>
+                </form>
+            </div>
+        </div>
     </div>
 {% endblock %}
 

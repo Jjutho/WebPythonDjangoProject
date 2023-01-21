@@ -6,7 +6,7 @@
 
 {% block css %}
     {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'Games/game_styles.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'Games/css/game_styles.css' %}">
 {% endblock %}
 
 {% block heading %}
@@ -24,8 +24,9 @@
                     <li>Genre: {{ game.get_genre_display }}</li>
                     <li>Age rating: {{ game.age_rating }}</li>
                 </ul>
-                <p>{{ game.description }}</p>
-                <p><a class="button primary" href="{{ game.id }}/">View Details</a></p>
+                <h4>Description:</h4>
+                <p class="game-card-description">{{ game.description }}</p>
+                <p><a class="button primary" href="{% url 'game-detail' game.id %}">View Details</a></p>
             </div>
         {% endfor %}
     </div>

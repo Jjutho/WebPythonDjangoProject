@@ -2,8 +2,10 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('show/', views.GameListView.as_view(), name='game-list'),
-    path('show/<int:pk>/', views.GameDetailView.as_view(), name='game-detail'),
-    path('add/', views.GameCreateView.as_view(), name='game-create'),
-    path('delete/<int:pk>/', views.GameDeleteView.as_view(), name='game-delete'),
+    path('show/', views.game_list, name='game-list'),
+    path('show/<int:pk>/', views.game_detail, name='game-detail'),
+    path('add/', views.game_create, name='game-create'),
+    path('delete/<int:pk>/', views.game_delete, name='game-delete'),
+    path('delete/<int:pk>/comment/<int:ck>/', views.comment_delete, name='comment-delete'),
+    path('show/<int:pk>/comment/<int:ck>/vote/<str:up_or_down>/', views.comment_vote, name='comment-vote'),
 ]

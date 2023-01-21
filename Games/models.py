@@ -2,6 +2,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import User
 from datetime import datetime
+from django.conf import settings
 
 class Game(models.Model):
     class GameGenre(models.TextChoices):
@@ -24,13 +25,14 @@ class Game(models.Model):
     description = models.TextField()
     creator = models.CharField(max_length=100)
     release_date = models.DateTimeField(blank=True, default=datetime.now)
+    cover_image = models.ImageField(upload_to='images/games', default='')
 
     # Game genre and age rating
     genre = models.CharField(max_length=3, choices=GameGenre.choices)
     age_rating = models.CharField(max_length=3, choices=AgeRatings.choices, default=AgeRatings.F00)
 
     # User who entered the game into the DB and when
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='users', related_query_name='user')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='users', related_query_name='user')
     upload_date = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -46,3 +48,61 @@ class Game(models.Model):
     def __repr__(self):
         return_string = self.title+'/'+self.creator+'/'+self.release_date.strftime("%d.%m.%Y %H:%M:%S")+'/description('+str(len(self.description))+')/'+self.genre+'/'+self.age_rating
         return return_string
+
+class Comment(models.Model):
+    text = models.TextField(max_length=500)
+    timestamp = models.DateTimeField(auto_now_add=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    game = models.ForeignKey(Game, on_delete=models.CASCADE)
+
+    class Meta:
+        ordering = ['timestamp']
+        verbose_name = 'Comment'
+        verbose_name_plural = 'Comments'
+
+    def get_comment_prefix(self):
+        if len(self.text) > 50:
+            return self.text[:50] + ' ...'
+        else:
+            return self.text
+
+    def get_upvotes(self):
+        upvotes = Vote.objects.filter(up_or_down='U', comment=self)
+        return upvotes
+
+    def get_upvotes_count(self):
+        return len(self.get_upvotes())
+
+    def get_downvotes(self):
+        downvotes = Vote.objects.filter(up_or_down='D', comment=self)
+        return downvotes
+
+    def get_downvotes_count(self):
+        return len(self.get_downvotes())
+
+    def vote(self, user, up_or_down):
+        U_or_D = 'U'
+        if up_or_down == 'down':
+            U_or_D = 'D'
+        vote = Vote.objects.create(up_or_down=U_or_D, user=user, comment=self)
+
+    def __str__(self):
+        return self.get_comment_prefix() + ' (' + self.user.username + ')'
+
+    def __repr__(self):
+        return self.get_comment_prefix() + ' (' + self.user.username + ' / ' + self.timestamp.strftime("%d.%m.%Y %H:%M:%S") + ')'
+
+class Vote(models.Model):
+
+    VOTE_TYPES = [
+        ('U', 'up'),
+        ('D', 'down'),
+    ]
+
+    def change_vote(self, new_vote):
+        self.up_or_down = new_vote
+
+    up_or_down = models.CharField(max_length=1, choices=VOTE_TYPES)
+    timestamp = models.DateTimeField(auto_now_add=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    comment = models.ForeignKey(Comment, on_delete=models.CASCADE)

@@ -6,7 +6,7 @@
 
 {% block css %}
     {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'Games/game_styles.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'Games/css/game_styles.css' %}">
 {% endblock %}
 
 {% block heading %}
@@ -17,10 +17,9 @@
     <form method="POST">
         {% csrf_token %}
         <p>Are you sure you want to delete this game: {{ that_one_game.title }}?</p>
-        {{ form }}
         <div class="button-container">
             <button class="button primary" type="submit">Yes</button>
-            <a class="button secondary" href="/games/show/{{ that_one_game.id }}/">No, back to game</a>
+            <a class="button secondary" href="{% url 'game-detail' that_one_game.id %}">No, back to game</a>
         </div>
     </form>
 {% endblock %}

@@ -1,0 +1,129 @@
+/* GAME LIST */
+.games-container {
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+    flex-wrap: wrap;
+    margin-bottom: 60px;
+}
+.game-card {
+    flex: 1 1 calc(50% - 15px);
+    max-width: calc(50% - 60px);
+    padding: 20px;
+    border: solid 1px #343434;
+    border-radius: 10px;
+    box-shadow: 5px 10px 10px rgba(0,0,0,0.2);
+    will-change: box-shadow;
+    transition: 0.1s ease-in-out;
+}
+.game-card:hover {
+    box-shadow: 5px 10px 7px rgba(0,0,0,0.3);
+}
+@media (max-width:768px) {
+    .game-card {
+        flex: 1 1 100%;
+        max-width: 100%;
+    }
+}
+.game-card h3 {
+    margin-bottom: 10px;
+    margin-top: 0px;
+}
+
+.game-card h4 {
+    margin-bottom: 10px;
+}
+
+.game-card .game-card-description {
+    margin-bottom: 60px;
+    margin-top: 0px;
+}
+
+/* GAME DETAIL */
+
+.game-detail-content {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    column-gap: 50px;
+}
+
+.left-column {
+
+}
+
+.right-column {
+
+}
+
+.game-detail-content h4 {
+    margin-bottom: 10px;
+}
+
+.game-detail-description {
+    margin-bottom: 60px;
+    margin-top: 0px;
+}
+
+.game-detail-upload-date {
+    margin-bottom: 60px;
+}
+
+.game-detail-content .button-delete-container {
+    margin-bottom: 60px;
+}
+
+/* GAME-DETAIL: COMMENTS */
+.comments-list {
+    list-style: none;
+    padding-left:0;
+}
+
+.comment-list-element {
+    margin-bottom: 40px;
+}
+
+.comments-heading {
+    margin-top:0;
+}
+
+.comment-text {
+    border: 1px solid;
+    border-radius: 10px 10px 10px 0px;
+    padding: 20px;
+}
+
+.delete-link {
+    color: red;
+    text-decoration: none;
+    font-size:0.9em;
+}
+.delete-link:hover {
+    text-decoration: underline;
+}
+
+label[for="id_text"] {
+    display:none;
+}
+textarea[name="text"] {
+    width:100%;
+}
+
+
+/* FORM STYLES */
+.game-create-content input,
+.game-create-content textarea,
+.game-create-content select{
+    margin-bottom: 25px;
+    margin-top: 10px;
+    min-width: 400px;
+    font-size: 16px;
+    padding: 10px;
+    border-radius: 10px;
+    border-color: #343434;
+    border-width: 2px;
+    box-shadow: 5px 10px 10px rgba(0,0,0,0.2);
+}
+.game-create-content label {
+    font-weight: bold;
+    font-size: 20px;
+}
