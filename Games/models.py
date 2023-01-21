@@ -2,6 +2,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import User
 from datetime import datetime
+from django.conf import settings
 
 class Game(models.Model):
     class GameGenre(models.TextChoices):
@@ -24,14 +25,14 @@ class Game(models.Model):
     description = models.TextField()
     creator = models.CharField(max_length=100)
     release_date = models.DateTimeField(blank=True, default=datetime.now)
-    cover_image = models.ImageField(upload_to='media/images/games', default='')
+    cover_image = models.ImageField(upload_to='images/games', default='')
 
     # Game genre and age rating
     genre = models.CharField(max_length=3, choices=GameGenre.choices)
     age_rating = models.CharField(max_length=3, choices=AgeRatings.choices, default=AgeRatings.F00)
 
     # User who entered the game into the DB and when
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='users', related_query_name='user')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='users', related_query_name='user')
     upload_date = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -51,7 +52,7 @@ class Game(models.Model):
 class Comment(models.Model):
     text = models.TextField(max_length=500)
     timestamp = models.DateTimeField(auto_now_add=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
 
     class Meta:
@@ -103,5 +104,5 @@ class Vote(models.Model):
 
     up_or_down = models.CharField(max_length=1, choices=VOTE_TYPES)
     timestamp = models.DateTimeField(auto_now_add=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
