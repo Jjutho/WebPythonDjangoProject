@@ -24,7 +24,7 @@ venv.bak/
 *.log
 *.pot
 *.pyc
-**/__pycache__/
+**/__pycache__/*.pyc
 local_settings.py
 db.sqlite3
 media
