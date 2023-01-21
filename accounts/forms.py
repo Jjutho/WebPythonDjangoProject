@@ -6,16 +6,10 @@ class SignUpForm(UserCreationForm):
 
     class Meta:
         model = CustomUser
-        fields = ['username', 'birth_date', 'profile_picture']
-        widgets = {
-            'birth_date': forms.DateInput(format='%d.%m.%Y')
-        }
+        fields = ['username', 'email', 'age', 'profile_picture']
 
 class UserChangeForm(UserChangeForm):
 
     class Meta(UserChangeForm):
         model = CustomUser
-        fields = ['username', 'birth_date', 'profile_picture']
-        widgets = {
-            'birth_date': forms.DateInput(format='%d.%m.%Y')
-        }
+        fields = ['username', 'age', 'profile_picture']
