@@ -25,13 +25,19 @@
     <br>
 
     {% if show_results %}
-        <b>Game was found:</b><br>
+        <b>Found games:</b><br>
         <ul>
         {% for game in game_found %}
             <a href="{% url 'game-detail' game.id %}"><b>{{ game.title }}</b></a><br>
-            {{ game.creator }} / {{ game.get_genre_display }} / {{ game.release_date }} pages<br>
+            <i>Game Creator: </i>{{ game.creator }} / {{ game.get_genre_display }} / <i>Released: </i>{{ game.release_date }}<br>
             <br>
         {% endfor %}
         </ul>
+    {% else %}
+        <b>No matching games found.</b><br>
     {% endif %}
+    <div class="button-container">
+        <a class="button primary" href="{% url 'game-list' %}">Show me all games</a>
+        <a class="button secondary" href="{% url 'home' %}">Back to Home</a>
+    </div>
 {% endblock %}

@@ -1,4 +1,6 @@
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
+from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import generic
 from .forms import SignUpForm
@@ -20,3 +22,7 @@ class LoginView(LoginView):
         auth_login(self.request, form.get_user())
         form.get_user().execute_after_login()  # Custom code
         return HttpResponseRedirect(self.get_success_url())
+
+@login_required
+def account_profile(request):
+    return render(request, 'account-profile.html')

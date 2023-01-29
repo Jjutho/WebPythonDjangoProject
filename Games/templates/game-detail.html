@@ -17,7 +17,7 @@
     <div class="game-detail-content">
         <div class="left-column">
             <h2>Game Information:</h2>
-            <img src="{{ that_one_game.cover_image.url }}">
+            <img width="300" src="{{ that_one_game.cover_image.url }}">
             <ul>
                 <li>Release date: {{ that_one_game.release_date }}</li>
                 <li>Game Creator: {{ that_one_game.creator }}</li>
@@ -27,7 +27,9 @@
             <h4>Description:</h4>
             <p class="game-detail-description">{{ that_one_game.description }}</p>
             <p class="game-detail-upload-date">Uploaded by: <i>{{ that_one_game.user }}</i> at <i>{{ that_one_game.upload_date }}</i></p>
-            <p class="button-delete-container"><a class="button primary button-delete" href="{% url 'game-delete' that_one_game.id %}">Delete Game</a></p>
+            <p class="button-delete-container">
+                <a class="button primary button-delete" href="{% url 'game-delete' that_one_game.id %}">Delete Game</a>
+            </p>
             <div class="button-container">
                 <a class="button secondary button-back" href="{% url 'game-list' %}">Back to all games</a>
                 <a class="button secondary button-back-list" href="{% url 'home' %}">Back to Home</a>

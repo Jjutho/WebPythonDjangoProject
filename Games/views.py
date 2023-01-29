@@ -94,12 +94,16 @@ def game_search(request):
 
         search_string_title = request.POST['title']
         if search_string_title:
-            books_found = game_found.filter(title__contains=search_string_title)
+            game_found = game_found.filter(title__contains=search_string_title)
 
+        if not game_found:
+            show_results = False
+        else:
+            show_results = True
         form_in_function_based_view = SearchForm()
         context = {'form': form_in_function_based_view,
                    'game_found': game_found,
-                   'show_results': True}
+                   'show_results': show_results}
         return render(request, 'game-search.html', context)
 
     else:
