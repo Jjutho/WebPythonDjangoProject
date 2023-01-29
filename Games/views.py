@@ -32,18 +32,18 @@ def game_detail(request, **kwargs):
     return render(request, 'game-detail.html', context)
 
 def game_create(request):
+    form = GameForm()
+    context = {'form': form}
     if request.method == 'POST':
-        form = GameForm(request.POST)
+        form = GameForm(request.POST, request.FILES)
         form.instance.user = request.user
         if form.is_valid():
             form.save()
+            return redirect('game-list')
         else:
-            pass
-        return redirect('game-list')
-    else:
-        form = GameForm()
-        context = {'form': form}
-        return render(request, 'game-create.html', context)
+            print(form.errors)
+
+    return render(request, 'game-create.html', context)
 
 def game_delete(request, **kwargs):
     game_id = kwargs['pk']

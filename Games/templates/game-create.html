@@ -22,7 +22,8 @@
             <label for="{{ form.title.id_for_label }}">Title of the game</label><br>
             <input id="{{ form.title.id_for_label }}" type="{{ form.title.field.widget.input_type }}" name="{{ form.title.html_name }}" placeholder="Game title"><br>
 
-            {{ form.cover_image }}
+            <label for="{{ form.cover_image.id_for_label }}">Cover image</label><br>
+            {{ form.cover_image }}<br>
 
             <label for="{{ form.creator.id_for_label }}">Developer/Game Studio</label><br>
             <input id="{{ form.creator.id_for_label }}" type="{{ form.creator.field.widget.input_type }}" name="{{ form.creator.html_name }}" placeholder="Developer/Game Studio"><br>
