@@ -5,6 +5,7 @@ from django.conf import settings
 
 class Game(models.Model):
     class GameGenre(models.TextChoices):
+        EMPTY = '', _('Nothing selected')
         FIRSTPERSONSHOOTER = 'FPS', _('First Person Shooter')
         SIMULATION = 'SIM', _('Simulation')
         CITYBUILDER = 'CB', _('City Builder')
@@ -13,6 +14,7 @@ class Game(models.Model):
         RACINGGAME = 'RC', _('Racing Game')
 
     class AgeRatings(models.TextChoices):
+        EMPTY = '', _('Nothing selected')
         F00 = '0+', _('from 0')
         F06 = '6+', _('from 6')
         F12 = '12+', _('from 12')
@@ -20,17 +22,17 @@ class Game(models.Model):
         F18 = '18+', _('from 18')
 
     # Game title, description, creator and date that the game was released
-    title = models.CharField(max_length=100)
-    description = models.TextField()
-    creator = models.CharField(max_length=100)
-    release_date = models.DateTimeField(blank=True, default=datetime.now)
+    title = models.CharField(blank=False, max_length=100)
+    description = models.TextField(blank=False)
+    creator = models.CharField(blank=False, max_length=100)
+    release_date = models.DateTimeField(blank=False, default=datetime.now)
     cover_image = models.ImageField(upload_to='images/games', default='')
     price = models.IntegerField(default=0, blank=False)
     product_data_pdf = models.FileField(upload_to='documents/games', default='')
 
     # Game genre and age rating
-    genre = models.CharField(max_length=3, choices=GameGenre.choices)
-    age_rating = models.CharField(max_length=3, choices=AgeRatings.choices, default=AgeRatings.F00)
+    genre = models.CharField(max_length=4, choices=GameGenre.choices, default=GameGenre.EMPTY)
+    age_rating = models.CharField(max_length=4, choices=AgeRatings.choices, default=AgeRatings.EMPTY)
 
     # User who entered the game into the DB and when
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='users', related_query_name='user')

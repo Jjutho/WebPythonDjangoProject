@@ -48,11 +48,14 @@ class CommentForm(forms.ModelForm):
         }
 class SearchForm(forms.ModelForm):
 
+    creator = forms.CharField(required=False)
     title = forms.CharField(required=False)
+    genre = forms.ChoiceField(choices=Game.GameGenre.choices, required=False)
+    age_rating = forms.ChoiceField(choices=Game.AgeRatings.choices, required=False)
 
     class Meta:
         model = Game
-        fields = ['creator', 'title','release_date', 'genre', 'age_rating' ]
+        fields = ['creator', 'title', 'genre', 'age_rating']
 
 class ReviewForm(forms.ModelForm):
     model = Review

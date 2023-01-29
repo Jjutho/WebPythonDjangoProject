@@ -122,21 +122,30 @@ def comment_vote(request, pk: str, ck: int, up_or_down: str):
 
 def game_search(request):
     if request.method == 'POST':
-        search_string_creator = request.POST['creator']
-        game_found = Game.objects.filter(creator__contains=search_string_creator)
 
-        search_string_title = request.POST['title']
-        if search_string_title:
-            game_found = game_found.filter(title__contains=search_string_title)
+        games_found = Game.objects.filter(
+            creator__contains=request.POST['creator'],
+            title__contains=request.POST['title'],
+            genre__contains=request.POST['genre'],
+            age_rating__contains=request.POST['age_rating']
+        )
 
-        if not game_found:
+        query = {
+            request.POST['creator'],
+            request.POST['title'],
+            request.POST['genre'],
+            request.POST['age_rating']
+        }
+
+        if not games_found:
             show_results = False
         else:
             show_results = True
         form_in_function_based_view = SearchForm()
         context = {'form': form_in_function_based_view,
-                   'game_found': game_found,
-                   'show_results': show_results}
+                   'game_found': games_found,
+                   'show_results': show_results,
+                   'query': query}
         return render(request, 'game-search.html', context)
 
     else:
@@ -145,11 +154,11 @@ def game_search(request):
                    'show_results': False}
         return render(request, 'game-search.html', context)
 
-def Review_rate(request):
+def review_rate(request):
     if request.method == "GET":
         game_id = request.GET.get('game_id')
         game = Game.objects.get(id=game_id)
         rate = request.GET.get('rate')
         user = request.user
-        Review(user=user,game=game,rate=rate).save()
+        Review(user=user, game=game, rate=rate).save()
         return redirect('game-detail', id=game_id)
