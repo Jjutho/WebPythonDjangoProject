@@ -35,6 +35,11 @@
                     <a class="button primary button-edit" href="{% url 'game-edit' that_one_game.id %}">Edit Game</a>
                 </p>
             {% endif %}
+            {% if that_one_game.product_data_pdf %}
+                <div class="button-download-container">
+                    <a class="button primary button-download" target="_blank" href="{% url that_one_game.product_data_pdf.url %}">Download PDF</a>
+                </div>
+            {% endif %}
             <div class="add-to-cart-container">
                 <form method="POST">
                     {% csrf_token %}

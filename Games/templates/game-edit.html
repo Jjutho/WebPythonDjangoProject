@@ -25,6 +25,9 @@
             <label for="{{ form.cover_image.id_for_label }}">Cover image</label><br>
             {{ form.cover_image }}<br>
 
+            <label for="{{ form.product_data_pdf.id_for_label }}">Product data PDF</label><br>
+            {{ form.product_data_pdf }}<br>
+
             <label for="{{ form.creator.id_for_label }}">Developer/Game Studio</label><br>
             <input id="{{ form.creator.id_for_label }}" type="{{ form.creator.field.widget.input_type }}" name="{{ form.creator.html_name }}" placeholder="Developer/Game Studio" value="{{ that_one_game.creator }}"><br>
 
