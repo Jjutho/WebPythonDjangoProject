@@ -17,9 +17,9 @@ class CommentDeleteView(ListView):
     def get_context_data(self, **kwargs):
         context = super(CommentDeleteView, self).get_context_data(**kwargs)
         can_delete = False
-        myuser = self.request.user
-        if not myuser.is_anonymous:
-            can_delete = myuser.can_delete()
+        user = self.request.user
+        if not user.is_anonymous:
+            can_delete = user.can_delete()
         context['can_delete'] = can_delete
         return context
 
@@ -39,9 +39,9 @@ class CommentEditView(UpdateView):
     def get_context_data(self, **kwargs):
         context = super(CommentEditView, self).get_context_data(**kwargs)
         can_delete = False
-        myuser = self.request.user
-        if not myuser.is_anonymous:
-            can_delete = myuser.can_delete()
+        user = self.request.user
+        if not user.is_anonymous:
+            can_delete = user.can_delete()
         context['can_delete'] = can_delete
         return context
 
@@ -65,9 +65,9 @@ def comment_edit_delete(request, pk: str):
 
     else:
         can_delete = False
-        myuser = request.user
-        if not myuser.is_anonymous:
-            can_delete = myuser.can_delete()
+        user = request.user
+        if not user.is_anonymous:
+            can_delete = user.can_delete()
         comment = Comment.objects.get(id=comment_id)
         form = CommentEditForm(request.POST or None, instance=comment)
         context = {'form': form,
