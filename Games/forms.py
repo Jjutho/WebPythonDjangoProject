@@ -1,5 +1,5 @@
 from django import forms
-from .models import Game, Comment
+from .models import Game, Comment, Review
 
 class GameForm(forms.ModelForm):
 
@@ -27,4 +27,11 @@ class SearchForm(forms.ModelForm):
 
     class Meta:
         model = Game
-        fields = ['creator', 'title']
+        fields = ['creator', 'title','release_date', 'genre', 'age_rating' ]
+
+class ReviewForm(forms.ModelForm):
+    model = Review
+    widgets = {
+        'user': forms.HiddenInput(),
+        'game': forms.HiddenInput(),
+    }
