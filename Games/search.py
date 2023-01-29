@@ -18,19 +18,19 @@ print('----- filter() -----')
 games = Game.objects.filter(id__gt=2)
 
 if games: # Pruefen, ob mindestens 1 Objekt gefunden ist
-    print(len(games), 'yes books found')
+    print(len(games), 'yes game found')
 else:
-    print(len(games), 'no books found')
+    print(len(games), 'no game found')
 
 print('----- exclude() -----')
 games = Game.objects.exclude(creator__endswith='Cat')
-print('Books found:')
+print('Game found:')
 for game in games:
     print(repr(games))
 
 print('----- verketten -----')
 books = Game.objects.filter(creator__endswith='Cat')\
     .filter(date_published__gt=datetime.date(2015,2,15))
-print('Books found:')
+print('Game found:')
 for game in games:
     print(repr(game))

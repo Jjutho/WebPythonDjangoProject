@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect
 
 from Shoppingcart.models import ShoppingCart
 from .forms import GameForm, GameEditForm, CommentForm, SearchForm
-from .models import Game, Comment, Vote
+from .models import Game, Comment, Vote, Review
 
 def game_list(request):
     all_games = Game.objects.all()
@@ -119,6 +119,7 @@ def comment_vote(request, pk: str, ck: int, up_or_down: str):
 
     return redirect('game-detail', pk=pk)
 
+
 def game_search(request):
     if request.method == 'POST':
         search_string_creator = request.POST['creator']
@@ -143,3 +144,12 @@ def game_search(request):
         context = {'form': form_in_function_based_view,
                    'show_results': False}
         return render(request, 'game-search.html', context)
+
+def Review_rate(request):
+    if request.method == "GET":
+        game_id = request.GET.get('game_id')
+        game = Game.objects.get(id=game_id)
+        rate = request.GET.get('rate')
+        user = request.user
+        Review(user=user,game=game,rate=rate).save()
+        return redirect('game-detail', id=game_id)
