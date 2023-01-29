@@ -8,4 +8,6 @@ urlpatterns = [
     path('delete/<int:pk>/', views.game_delete, name='game-delete'),
     path('delete/<int:pk>/comment/<int:ck>/', views.comment_delete, name='comment-delete'),
     path('show/<int:pk>/comment/<int:ck>/vote/<str:up_or_down>/', views.comment_vote, name='comment-vote'),
+    path('search/', views.game_search, name='game-search'),
 ]
+

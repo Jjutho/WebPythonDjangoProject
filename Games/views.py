@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 
-from .forms import GameForm, CommentForm
+from .forms import GameForm, CommentForm, SearchForm
 from .models import Game, Comment, Vote
 
 def game_list(request):
@@ -86,3 +86,24 @@ def comment_vote(request, pk: str, ck: int, up_or_down: str):
         comment.vote(user, up_or_down)
 
     return redirect('game-detail', pk=pk)
+
+def game_search(request):
+    if request.method == 'POST':
+        search_string_creator = request.POST['creator']
+        game_found = Game.objects.filter(creator__contains=search_string_creator)
+
+        search_string_title = request.POST['title']
+        if search_string_title:
+            books_found = game_found.filter(title__contains=search_string_title)
+
+        form_in_function_based_view = SearchForm()
+        context = {'form': form_in_function_based_view,
+                   'game_found': game_found,
+                   'show_results': True}
+        return render(request, 'game-search.html', context)
+
+    else:
+        form_in_function_based_view = SearchForm()
+        context = {'form': form_in_function_based_view,
+                   'show_results': False}
+        return render(request, 'game-search.html', context)
