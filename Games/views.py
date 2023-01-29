@@ -1,3 +1,4 @@
+from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 
@@ -36,7 +37,7 @@ def game_detail(request, **kwargs):
 
     return render(request, 'game-detail.html', context)
 
-@login_required
+@staff_member_required
 def game_create(request):
     form = GameForm()
     context = {'form': form}
@@ -51,7 +52,7 @@ def game_create(request):
 
     return render(request, 'game-create.html', context)
 
-@login_required
+@staff_member_required
 def game_delete(request, **kwargs):
     game_id = kwargs['pk']
     that_one_game = Game.objects.get(id=game_id)
@@ -62,14 +63,16 @@ def game_delete(request, **kwargs):
         context = {'that_one_game': that_one_game}
         return render(request, 'game-delete.html', context)
 
+@login_required()
 def comment_delete(request, **kwargs):
     comment_id = kwargs['ck']
     game_id = kwargs['pk']
     comment = Comment.objects.get(id=comment_id)
-    if request.user.username == comment.user.username:
+    if request.user.username == comment.user.username or request.user.is_staff:
         comment.delete()
         return redirect('game-detail', pk=game_id)
 
+@login_required()
 def comment_vote(request, pk: str, ck: int, up_or_down: str):
     comment_id = int(ck)
     comment = Comment.objects.get(id=comment_id)

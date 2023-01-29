@@ -78,3 +78,7 @@ button {
     gap: 25px;
     margin: 25px 0;
 }
+
+a.disabled {
+    pointer-events: none;
+}

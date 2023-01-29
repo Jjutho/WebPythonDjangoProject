@@ -27,9 +27,11 @@
             <h4>Description:</h4>
             <p class="game-detail-description">{{ that_one_game.description }}</p>
             <p class="game-detail-upload-date">Uploaded by: <i>{{ that_one_game.user }}</i> at <i>{{ that_one_game.upload_date }}</i></p>
-            <p class="button-delete-container">
-                <a class="button primary button-delete" href="{% url 'game-delete' that_one_game.id %}">Delete Game</a>
-            </p>
+            {% if request.user.is_staff %}
+                <p class="button-delete-container">
+                    <a class="button primary button-delete" href="{% url 'game-delete' that_one_game.id %}">Delete Game</a>
+                </p>
+            {% endif %}
             <div class="add-to-cart-container">
                 <form method="POST">
                     {% csrf_token %}
@@ -49,27 +51,29 @@
                         <li class="comment-list-element">
                             <div>
                                 <p class="comment-text">{{ comment.text }}</p>
-                                <p class="comment-meta">By <i>{{ comment.user.username }}</i> on <i>{{ comment.timestamp }}</i>{% if user.username == comment.user.username %} <a class="delete-link" href="{% url 'comment-delete' that_one_game.id comment.id %}">Delete comment</a>{% endif %}</p>
+                                <p class="comment-meta">By <i>{{ comment.user.username }}</i> on <i>{{ comment.timestamp }}</i>{% if user.username == comment.user.username or user.is_staff %} <a class="delete-link" href="{% url 'comment-delete' that_one_game.id comment.id %}">Delete comment</a>{% endif %}</p>
                                 <div class="comment-votes">
                                       <span style="color:darkgreen">
                                           {{ comment.get_upvotes_count }}
-                                          <a href="{% url 'comment-vote' that_one_game.id comment.id 'up' %}">up</a>
+                                          <a href="{% url 'comment-vote' that_one_game.id comment.id 'up' %}" {% if request.user.is_staff %}class="disabled"{% endif %}>up</a>
                                       </span>
                                       <span style="color:crimson">
                                           {{ comment.get_downvotes_count }}
-                                          <a href="{% url 'comment-vote' that_one_game.id comment.id 'down' %}">down</a>
+                                          <a href="{% url 'comment-vote' that_one_game.id comment.id 'down' %}" {% if request.user.is_staff %}class="disabled"{% endif %}>down</a>
                                       </span>
                                 </div>
                             </div>
                         </li>
                     {% endfor %}
                 </ul>
+                {% if not request.user.is_staff %}
                 <b>Do you want to leave a comment?</b>
                 <form method="POST">
                     {% csrf_token %}
                     {{ comment_form.as_p }}
                     <button class="button primary button-submit-comment" type="submit" name="action" value="comment">Add comment</button>
                 </form>
+                {% endif %}
             </div>
         </div>
     </div>
