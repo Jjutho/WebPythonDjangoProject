@@ -31,6 +31,9 @@
                 <p class="button-delete-container">
                     <a class="button primary button-delete" href="{% url 'game-delete' that_one_game.id %}">Delete Game</a>
                 </p>
+                <p class="button-edit-container">
+                    <a class="button primary button-edit" href="{% url 'game-edit' that_one_game.id %}">Edit Game</a>
+                </p>
             {% endif %}
             <div class="add-to-cart-container">
                 <form method="POST">
@@ -46,26 +49,30 @@
         <div class="right-column">
             <h4 class="comments-heading">Comments:</h4>
             <div class="comments-container">
-                <ul class="comments-list">
-                    {% for comment in comments_for_that_one_game %}
-                        <li class="comment-list-element">
-                            <div>
-                                <p class="comment-text">{{ comment.text }}</p>
-                                <p class="comment-meta">By <i>{{ comment.user.username }}</i> on <i>{{ comment.timestamp }}</i>{% if user.username == comment.user.username or user.is_staff %} <a class="delete-link" href="{% url 'comment-delete' that_one_game.id comment.id %}">Delete comment</a>{% endif %}</p>
-                                <div class="comment-votes">
-                                      <span style="color:darkgreen">
-                                          {{ comment.get_upvotes_count }}
-                                          <a href="{% url 'comment-vote' that_one_game.id comment.id 'up' %}" {% if request.user.is_staff %}class="disabled"{% endif %}>up</a>
-                                      </span>
-                                      <span style="color:crimson">
-                                          {{ comment.get_downvotes_count }}
-                                          <a href="{% url 'comment-vote' that_one_game.id comment.id 'down' %}" {% if request.user.is_staff %}class="disabled"{% endif %}>down</a>
-                                      </span>
+                {% if not comments_for_that_one_game %}
+                    <p>Not comments yet. Be the first to comment!</p>
+                {% else %}
+                    <ul class="comments-list">
+                        {% for comment in comments_for_that_one_game %}
+                            <li class="comment-list-element">
+                                <div>
+                                    <p class="comment-text">{{ comment.text }}</p>
+                                    <p class="comment-meta">By <i>{{ comment.user.username }}</i> on <i>{{ comment.timestamp }}</i>{% if user.username == comment.user.username or user.is_staff %} <a class="delete-link" href="{% url 'comment-delete' that_one_game.id comment.id %}">Delete comment</a>{% endif %}</p>
+                                    <div class="comment-votes">
+                                          <span style="color:darkgreen">
+                                              {{ comment.get_upvotes_count }}
+                                              <a href="{% url 'comment-vote' that_one_game.id comment.id 'up' %}" {% if request.user.is_staff %}class="disabled"{% endif %}>up</a>
+                                          </span>
+                                          <span style="color:crimson">
+                                              {{ comment.get_downvotes_count }}
+                                              <a href="{% url 'comment-vote' that_one_game.id comment.id 'down' %}" {% if request.user.is_staff %}class="disabled"{% endif %}>down</a>
+                                          </span>
+                                    </div>
                                 </div>
-                            </div>
-                        </li>
-                    {% endfor %}
-                </ul>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
                 {% if not request.user.is_staff %}
                 <b>Do you want to leave a comment?</b>
                 <form method="POST">

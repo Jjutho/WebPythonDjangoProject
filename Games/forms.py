@@ -12,6 +12,18 @@ class GameForm(forms.ModelForm):
             'user': forms.HiddenInput(),
         }
 
+class GameEditForm(forms.ModelForm):
+
+    cover_image = forms.ImageField(required=False)
+    class Meta:
+        model = Game
+        fields = ['title', 'description', 'cover_image', 'creator', 'release_date', 'genre', 'age_rating']
+        widgets = {
+            'genre': forms.Select(choices=Game.GameGenre),
+            'age_rating': forms.Select(choices=Game.AgeRatings),
+            'user': forms.HiddenInput(),
+        }
+
 class CommentForm(forms.ModelForm):
 
     class Meta:
