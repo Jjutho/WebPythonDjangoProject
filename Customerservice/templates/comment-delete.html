@@ -1,0 +1,33 @@
+{% extends 'home.html' %}
+{% load static %}
+
+{% block title %}Comment delete{% endblock %}
+
+{% block css %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'Games/css/game_styles.css' %}">
+{% endblock %}
+
+{% block logged_in_content %}
+<h2>Comment delete</h2>
+    {% if not can_delete %}
+        You are not authorized to delete comments.<br><br>
+    {% endif %}
+
+    {% for comment in all_the_comments %}
+        <b style="color: darkgreen">{{ comment.myuser.username }} on {{ comment.timestamp }}</b><br>
+        {{ comment.text }}<br>
+
+        {% if can_delete %}
+            <form method="POST">
+                {% csrf_token %}
+                <input type="hidden" id="comment_id" name="comment_id" value="{{ comment.id }}">
+                <button type="submit" name="delete">Delete</button>
+            </form>
+        {% endif %}
+
+        <br>
+    {% endfor %}
+    <br>
+
+{% endblock %}

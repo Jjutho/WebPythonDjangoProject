@@ -1,0 +1,27 @@
+{% extends 'home.html' %}
+{% load static %}
+
+{% block title %}Comment edit{% endblock %}
+
+{% block css %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'Games/css/game_styles.css' %}">
+{% endblock %}
+
+{% block logged_in_content %}
+<h2>Comment edit</h2>
+    {% if not can_delete %}
+        You are not authorized to edit comments.<br><br>
+    {% endif %}
+
+    <b style="color: darkgreen">{{ comment.myuser.username }} on {{ comment.timestamp }}</b><br>
+    {% if can_delete %}
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Edit</button>
+        </form>
+    {% else %}
+        {{ comment.text }}<br>
+    {% endif %}
+{% endblock %}

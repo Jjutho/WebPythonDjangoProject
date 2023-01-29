@@ -1,0 +1,37 @@
+{% extends "home.html" %}
+
+{% block title %}
+    Game Search
+{% endblock %}
+
+
+{% block css %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'Games/css/game_styles.css' %}">
+{% endblock %}
+
+{% block heading %}
+    <h1>Search Games</h1>
+{% endblock %}
+
+{% block logged_in_content %}
+<h2>Search Game</h2>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Search</button>
+    </form>
+    <br>
+    <br>
+
+    {% if show_results %}
+        <b>Game was found:</b><br>
+        <ul>
+        {% for game in game_found %}
+            <a href="{% url 'game-detail' game.id %}"><b>{{ game.title }}</b></a><br>
+            {{ game.creator }} / {{ game.get_genre_display }} / {{ game.release_date }} pages<br>
+            <br>
+        {% endfor %}
+        </ul>
+    {% endif %}
+{% endblock %}

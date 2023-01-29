@@ -21,3 +21,10 @@ class CommentForm(forms.ModelForm):
             'user': forms.HiddenInput(),
             'game': forms.HiddenInput(),
         }
+class SearchForm(forms.ModelForm):
+
+    title = forms.CharField(required=False)
+
+    class Meta:
+        model = Game
+        fields = ['creator', 'title']
