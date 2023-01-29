@@ -69,7 +69,7 @@
                 {% else %}
                     <ul class="comments-list">
                         {% for comment in comments_for_that_one_game %}
-                                <li class="comment-list-element {{ comment.reported }} {{ comment.approved }}">
+                                <li class="comment-list-element">
                                     <div>
                                         {% if comment.approved or user.is_staff %}
                                             <p class="comment-text">{{ comment.text }}</p>
