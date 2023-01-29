@@ -37,7 +37,7 @@
             {% endif %}
             {% if that_one_game.product_data_pdf %}
                 <div class="button-download-container">
-                    <a class="button primary button-download" target="_blank" href="{% url that_one_game.product_data_pdf.url %}">Download PDF</a>
+                    <a class="button primary button-download" target="_blank" href="{{ that_one_game.product_data_pdf.url }}">Download PDF</a>
                 </div>
             {% endif %}
             <div class="add-to-cart-container">
