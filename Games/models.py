@@ -26,6 +26,7 @@ class Game(models.Model):
     release_date = models.DateTimeField(blank=True, default=datetime.now)
     cover_image = models.ImageField(upload_to='images/games', default='')
     price = models.IntegerField(default=0, blank=False)
+    product_data_pdf = models.FileField(upload_to='documents/games', default='')
 
     # Game genre and age rating
     genre = models.CharField(max_length=3, choices=GameGenre.choices)

@@ -1,0 +1,77 @@
+{% extends "home.html" %}
+
+{% block title %}
+    Edit Game
+{% endblock %}
+
+{% block css %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'Games/css/game_styles.css' %}">
+{% endblock %}
+
+{% block heading %}
+    <h1>Edit Game</h1>
+{% endblock %}
+
+{% block logged_in_content %}
+    <div class="game-create-content">
+        <h2>Please fill out the fields.</h2>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <label for="{{ form.title.id_for_label }}">Title of the game</label><br>
+            <input id="{{ form.title.id_for_label }}" type="{{ form.title.field.widget.input_type }}" name="{{ form.title.html_name }}" placeholder="Game title" value="{{ that_one_game.title }}"><br>
+
+            <label for="{{ form.cover_image.id_for_label }}">Cover image</label><br>
+            {{ form.cover_image }}<br>
+
+            <label for="{{ form.product_data_pdf.id_for_label }}">Product data PDF</label><br>
+            {{ form.product_data_pdf }}<br>
+
+            <label for="{{ form.creator.id_for_label }}">Developer/Game Studio</label><br>
+            <input id="{{ form.creator.id_for_label }}" type="{{ form.creator.field.widget.input_type }}" name="{{ form.creator.html_name }}" placeholder="Developer/Game Studio" value="{{ that_one_game.creator }}"><br>
+
+            <label for="{{ form.description.id_for_label }}">{{ form.description.label }}</label><br>
+            <textarea rows="10" cols="40" id="{{ form.description.id_for_label }}" type="{{ form.description.field.widget.input_type }}" name="{{ form.description.html_name }}" value="{{ that_one_game.description }}">{{ that_one_game.description }}</textarea><br>
+            <br>
+
+            <label for="id_genre">Genre of the game</label><br>
+            <select id="id_genre" type="text" name="genre">
+                <option value="">---</option>
+                <option value="FPS" {% if that_one_game.genre == "FPS" %}selected{% endif %}>First Person Shooter</option>
+                <option value="SIM" {% if that_one_game.genre == "SIM" %}selected{% endif %}>Simulation</option>
+                <option value="CB" {% if that_one_game.genre == "CB" %}selected{% endif %}>City Builder</option>
+                <option value="HG" {% if that_one_game.genre == "HG" %}selected{% endif %}>Horror Game</option>
+                <option value="RPG" {% if that_one_game.genre == "RPG" %}selected{% endif %}>Role Playing Game</option>
+                <option value="RC" {% if that_one_game.genre == "RC" %}selected{% endif %}>Racing Game</option>
+            </select><br>
+
+            <label for="{{ form.age_rating.id_for_label }}">{{ form.age_rating.label }}</label><br>
+            <select id="{{ form.age_rating.id_for_label }}" type="{{ form.age_rating.field.widget.input_type }}" name="{{ form.age_rating.html_name }}">
+                <option value="0+" {% if that_one_game.age_rating == "0+" %}selected{% endif %}>from 0</option>
+                <option value="6+" {% if that_one_game.age_rating == "6+" %}selected{% endif %}>from 6</option>
+                <option value="12+" {% if that_one_game.age_rating == "12+" %}selected{% endif %}>from 12</option>
+                <option value="16+" {% if that_one_game.age_rating == "16+" %}selected{% endif %}>from 16</option>
+                <option value="18+" {% if that_one_game.age_rating == "18+" %}selected{% endif %}>from 18</option>
+            </select>
+            <br>
+
+            <label for="{{ form.release_date.id_for_label }}">{{ form.release_date.label }}</label><br>
+            <input type="{{ form.release_date.field.widget.input_type }}" name="{{ form.release_date.html_name }}" value="{{ form.release_date.value|date:"Y-m-d h:m:s" }}" id="{{ form.release_date.id_for_label }}">
+            <br>
+
+            <div class="button-container">
+                <button class="button primary" type="submit">Save Game</button>
+                <a class="button secondary" href="{% url 'game-detail' that_one_game.id %}">Cancel</a>
+            </div>
+        </form>
+    </div>
+{% endblock %}
+
+{% block not_logged_in_content %}
+    <h2>You must be logged in to add games.</h2>
+    <div class="button-container">
+        <a class="button primary" hhref="{% url 'login' %}">Login</a>
+        <a class="button secondary" hhref="{% url 'home' %}">Back to Home</a>
+    </div>
+{% endblock %}

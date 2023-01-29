@@ -3,9 +3,8 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 
 from Shoppingcart.models import ShoppingCart
-from .forms import GameForm, CommentForm, SearchForm
+from .forms import GameForm, GameEditForm, CommentForm, SearchForm
 from .models import Game, Comment, Vote, Review
-
 
 def game_list(request):
     all_games = Game.objects.all()
@@ -52,6 +51,28 @@ def game_create(request):
             print(form.errors)
 
     return render(request, 'game-create.html', context)
+
+@staff_member_required
+def game_edit(request, **kwargs):
+    game_id = kwargs['pk']
+    game = Game.objects.get(id=game_id)
+
+    form = GameEditForm()
+    context = {
+        'form': form,
+        'that_one_game': game
+    }
+
+    if request.method == 'POST':
+        form = GameEditForm(request.POST or None, request.FILES, instance=game)
+        form.instance.user = request.user
+        if form.is_valid():
+            form.save()
+            return redirect('game-detail', pk=game_id)
+        else:
+            print(form.errors)
+
+    return render(request, 'game-edit.html', context)
 
 @staff_member_required
 def game_delete(request, **kwargs):
