@@ -6,23 +6,22 @@ from django.utils import timezone
 
 class ShoppingCart(models.Model):
     timestamp = models.DateTimeField(default=timezone.now)
-    myuser = models.ForeignKey(settings.AUTH_USER_MODEL,
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,
                                on_delete=models.CASCADE,
                                )
 
-    def add_item(myuser, computer):
+    def add_item(user, game):
         # Get existing shopping cart, or create a new one if none exists
-        shopping_carts = ShoppingCart.objects.filter(myuser=myuser)
+        shopping_carts = ShoppingCart.objects.filter(user=user)
         if shopping_carts:
             shopping_cart = shopping_carts.first()
         else:
-            shopping_cart = ShoppingCart.objects.create(myuser=myuser)
+            shopping_cart = ShoppingCart.objects.create(user=user)
 
-        # Add computer to shopping cart
-        product_id = computer.id
-        product_name = computer.get_brand_display() + ' ' + computer.get_type_display() + ' / ' \
-                       + str(computer.memory) + ' Gb / ' + computer.get_operating_system_display()
-        price = computer.price
+        # Add game to shopping cart
+        product_id = game.id
+        product_name = game.creator + ': ' + game.title
+        price = game.price
         ShoppingCartItem.objects.create(product_id=product_id,
                                         product_name=product_name,
                                         price=price,
@@ -57,6 +56,6 @@ class Payment(models.Model):
     expiry_date = models.CharField(max_length=7)  # Format: 10/2022
     amount = models.DecimalField(decimal_places=2, max_digits=10)
     timestamp = models.DateTimeField(default=timezone.now)
-    myuser = models.ForeignKey(settings.AUTH_USER_MODEL,
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,
                                on_delete=models.CASCADE,
                                )

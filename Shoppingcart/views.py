@@ -8,7 +8,7 @@ from .models import ShoppingCart, ShoppingCartItem
 def show_shopping_cart(request):
     if request.method == 'POST':
         if 'empty' in request.POST:
-            ShoppingCart.objects.get(myuser=request.user).delete()
+            ShoppingCart.objects.get(user=request.user).delete()
 
             context = {'shopping_cart_is_empty': True,
                        'shopping_cart_items': None,
@@ -16,16 +16,16 @@ def show_shopping_cart(request):
             return render(request, 'shopping-cart.html', context)
 
         elif 'pay' in request.POST:
-            return redirect('shopping-cart-pay')
+            return redirect('pay')
 
     else:  # request.method == 'GET'
         shopping_cart_is_empty = True
         shopping_cart_items = None
         total = Decimal(0.0)  # Default without Decimal() would be type float!
 
-        myuser = request.user
-        if myuser.is_authenticated:
-            shopping_carts = ShoppingCart.objects.filter(myuser=myuser)
+        user = request.user
+        if user.is_authenticated:
+            shopping_carts = ShoppingCart.objects.filter(user=user)
             if shopping_carts:
                 shopping_cart = shopping_carts.first()
                 shopping_cart_is_empty = False
@@ -38,27 +38,27 @@ def show_shopping_cart(request):
         return render(request, 'shopping-cart.html', context)
 
 
-@login_required(login_url='/useradmin/login/')
+@login_required
 def pay(request):
     shopping_cart_is_empty = True
     paid = False
     form = None
 
     if request.method == 'POST':
-        myuser = request.user
+        user = request.user
         form = PaymentForm(request.POST)
-        form.instance.myuser = myuser
+        form.instance.user = user
         if form.is_valid():
             form.save()
             paid = True
 
             # Empty the shopping cart
-            ShoppingCart.objects.get(myuser=myuser).delete()
+            ShoppingCart.objects.get(user=user).delete()
         else:
             print(form.errors)
 
     else:  # request.method == 'GET'
-        shopping_carts = ShoppingCart.objects.filter(myuser=request.user)
+        shopping_carts = ShoppingCart.objects.filter(user=request.user)
         if shopping_carts:
             shopping_cart = shopping_carts.first()
             shopping_cart_is_empty = False

@@ -1,6 +1,5 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from django.contrib.auth.models import User
 from datetime import datetime
 from django.conf import settings
 
@@ -26,6 +25,7 @@ class Game(models.Model):
     creator = models.CharField(max_length=100)
     release_date = models.DateTimeField(blank=True, default=datetime.now)
     cover_image = models.ImageField(upload_to='images/games', default='')
+    price = models.IntegerField(default=0, blank=False)
 
     # Game genre and age rating
     genre = models.CharField(max_length=3, choices=GameGenre.choices)
@@ -42,11 +42,11 @@ class Game(models.Model):
         get_latest_by = "release_date"
 
     def __str__(self):
-        return_string = self.title+', Creator: '+self.creator+', Released: '+self.release_date.strftime("%d.%m.%Y %H:%M:%S")+', Genre: '+self.genre+', Suitable for the ages '+self.age_rating+';'
+        return_string = self.title+', Creator: '+self.creator+', Released: '+self.release_date.strftime("%d.%m.%Y %H:%M:%S")+', Genre: '+self.genre+', Suitable for the ages '+self.age_rating+'; '+'Price:' + self.price
         return return_string
 
     def __repr__(self):
-        return_string = self.title+'/'+self.creator+'/'+self.release_date.strftime("%d.%m.%Y %H:%M:%S")+'/description('+str(len(self.description))+')/'+self.genre+'/'+self.age_rating
+        return_string = self.title+'/'+self.creator+'/'+self.release_date.strftime("%d.%m.%Y %H:%M:%S")+'/description('+str(len(self.description))+')/'+self.genre+'/'+self.age_rating+'/'+self.price+'€'
         return return_string
 
 class Comment(models.Model):

@@ -1,5 +1,7 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 
+from Shoppingcart.models import ShoppingCart
 from .forms import GameForm, CommentForm, SearchForm
 from .models import Game, Comment, Vote
 
@@ -20,17 +22,21 @@ def game_detail(request, **kwargs):
     }
 
     if request.method == 'POST':
-        form = CommentForm(request.POST)
-        form.instance.user = request.user
-        form.instance.game = game
-        if form.is_valid():
-            form.save()
-            return redirect('game-detail', pk=game_id)
-        else:
-            print(form.errors)
+        if request.POST['action'] == 'comment':
+            form = CommentForm(request.POST)
+            form.instance.user = request.user
+            form.instance.game = game
+            if form.is_valid():
+                form.save()
+                return redirect('game-detail', pk=game_id)
+            else:
+                print(form.errors)
+        elif request.POST['action'] == 'add-to-cart':
+            ShoppingCart.add_item(request.user, game)
 
     return render(request, 'game-detail.html', context)
 
+@login_required
 def game_create(request):
     form = GameForm()
     context = {'form': form}
@@ -45,6 +51,7 @@ def game_create(request):
 
     return render(request, 'game-create.html', context)
 
+@login_required
 def game_delete(request, **kwargs):
     game_id = kwargs['pk']
     that_one_game = Game.objects.get(id=game_id)

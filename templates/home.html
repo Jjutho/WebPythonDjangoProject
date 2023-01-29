@@ -15,8 +15,8 @@
             <h2>Hello {{ user.username }}</h2>
             <div class="button-container">
                 <a class="button primary" href="{% url 'game-list' %}">Show me the games</a>
-                <a class="button secondary" href="{% url 'logout' %}">Logout</a>
                 <a class="button secondary" href="{% url 'game-search' %}">Search games</a>
+                <a class="button secondary" href="{% url 'logout' %}">Logout</a>
             </div>
         {% endblock %}
     {% else %}

@@ -30,6 +30,12 @@
             <p class="button-delete-container">
                 <a class="button primary button-delete" href="{% url 'game-delete' that_one_game.id %}">Delete Game</a>
             </p>
+            <div class="add-to-cart-container">
+                <form method="POST">
+                    {% csrf_token %}
+                    <button class="button primary" type="submit" name="action" value="add-to-cart">Add to shopping cart</button>
+                </form>
+            </div>
             <div class="button-container">
                 <a class="button secondary button-back" href="{% url 'game-list' %}">Back to all games</a>
                 <a class="button secondary button-back-list" href="{% url 'home' %}">Back to Home</a>
@@ -62,7 +68,7 @@
                 <form method="POST">
                     {% csrf_token %}
                     {{ comment_form.as_p }}
-                    <button class="button primary button-submit-comment" type="submit">Add comment</button>
+                    <button class="button primary button-submit-comment" type="submit" name="action" value="comment">Add comment</button>
                 </form>
             </div>
         </div>
