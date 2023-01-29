@@ -69,22 +69,36 @@
                 {% else %}
                     <ul class="comments-list">
                         {% for comment in comments_for_that_one_game %}
-                            <li class="comment-list-element">
-                                <div>
-                                    <p class="comment-text">{{ comment.text }}</p>
-                                    <p class="comment-meta">By <i>{{ comment.user.username }}</i> on <i>{{ comment.timestamp }}</i>{% if user.username == comment.user.username or user.is_staff %} <a class="delete-link" href="{% url 'comment-delete' that_one_game.id comment.id %}">Delete comment</a>{% endif %}</p>
-                                    <div class="comment-votes">
-                                          <span style="color:darkgreen">
-                                              {{ comment.get_upvotes_count }}
-                                              <a href="{% url 'comment-vote' that_one_game.id comment.id 'up' %}" {% if request.user.is_staff %}class="disabled"{% endif %}>up</a>
-                                          </span>
-                                          <span style="color:crimson">
-                                              {{ comment.get_downvotes_count }}
-                                              <a href="{% url 'comment-vote' that_one_game.id comment.id 'down' %}" {% if request.user.is_staff %}class="disabled"{% endif %}>down</a>
-                                          </span>
+                                <li class="comment-list-element {{ comment.reported }} {{ comment.approved }}">
+                                    <div>
+                                        {% if comment.approved or user.is_staff %}
+                                            <p class="comment-text">{{ comment.text }}</p>
+                                        {% else %}
+                                            <p>This comment has been reported and is waiting for approval.</p>
+                                        {% endif %}
+                                        <p class="comment-meta">By <i>{{ comment.user.username }}</i> on <i>{{ comment.timestamp }}</i>
+                                            {% if user.username == comment.user.username or user.is_staff %}
+                                                <a class="delete-link" href="{% url 'comment-delete' that_one_game.id comment.id %}">Delete comment</a>
+                                            {% endif %}
+                                            {% if comment.approved and not user.is_staff and not user.username == comment.user.username%}
+                                                <a class="report-link" href="{% url 'comment-report' that_one_game.id comment.id %}">Report comment</a>
+                                            {% endif %}
+                                            {% if not comment.approved and user.is_staff %}
+                                                <a class="approval-link" href="{% url 'comment-approval' that_one_game.id comment.id %}">Approve comment</a>
+                                            {% endif %}
+                                        </p>
+                                        <div class="comment-votes">
+                                              <span style="color:darkgreen">
+                                                  {{ comment.get_upvotes_count }}
+                                                  <a href="{% url 'comment-vote' that_one_game.id comment.id 'up' %}" {% if request.user.is_staff %}class="disabled"{% endif %}>up</a>
+                                              </span>
+                                              <span style="color:crimson">
+                                                  {{ comment.get_downvotes_count }}
+                                                  <a href="{% url 'comment-vote' that_one_game.id comment.id 'down' %}" {% if request.user.is_staff %}class="disabled"{% endif %}>down</a>
+                                              </span>
+                                        </div>
                                     </div>
-                                </div>
-                            </li>
+                                </li>
                         {% endfor %}
                     </ul>
                 {% endif %}

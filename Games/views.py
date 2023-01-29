@@ -95,6 +95,24 @@ def comment_delete(request, **kwargs):
         return redirect('game-detail', pk=game_id)
 
 @login_required()
+def comment_report(request, **kwargs):
+    comment_id = kwargs['ck']
+    game_id = kwargs['pk']
+    comment = Comment.objects.get(id=comment_id)
+    comment.report()
+    comment.save()
+    return redirect('game-detail', pk=game_id)
+
+@staff_member_required
+def comment_approval(request, **kwargs):
+    comment_id = kwargs['ck']
+    game_id = kwargs['pk']
+    comment = Comment.objects.get(id=comment_id)
+    comment.approve()
+    comment.save()
+    return redirect('game-detail', pk=game_id)
+
+@login_required()
 def comment_vote(request, pk: str, ck: int, up_or_down: str):
     comment_id = int(ck)
     comment = Comment.objects.get(id=comment_id)

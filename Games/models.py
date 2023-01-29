@@ -44,6 +44,10 @@ class Game(models.Model):
         verbose_name_plural = 'Games'
         get_latest_by = "release_date"
 
+    def get_reported_comments_count(self):
+        comments = Comment.objects.filter(approved=False, game=self)
+        return len(comments)
+
     def __str__(self):
         return_string = self.title+', Creator: '+self.creator+', Released: '+self.release_date.strftime("%d.%m.%Y %H:%M:%S")+', Genre: '+self.genre+', Suitable for the ages '+self.age_rating+'; '+'Price:' + self.price
         return return_string
@@ -57,6 +61,7 @@ class Comment(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
+    approved = models.BooleanField(default=True)
 
     class Meta:
         ordering = ['timestamp']
@@ -88,6 +93,12 @@ class Comment(models.Model):
         if up_or_down == 'down':
             U_or_D = 'D'
         vote = Vote.objects.create(up_or_down=U_or_D, user=user, comment=self)
+
+    def report(self):
+        self.approved = False
+
+    def approve(self):
+        self.approved = True
 
     def __str__(self):
         return self.get_comment_prefix() + ' (' + self.user.username + ')'
