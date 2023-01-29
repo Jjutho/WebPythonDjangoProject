@@ -7,9 +7,6 @@ db.sqlite3-journal
 # pyenv
 .python-version
 
-#DB
-/migrations/
-
 # Environments
 .env
 .venv
