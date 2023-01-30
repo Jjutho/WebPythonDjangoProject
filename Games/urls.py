@@ -11,7 +11,7 @@ urlpatterns = [
     path('report/<int:pk>/comment/<int:ck>/', views.comment_report, name='comment-report'),
     path('approve/<int:pk>/comment/<int:ck>/', views.comment_approval, name='comment-approval'),
     path('show/<int:pk>/comment/<int:ck>/vote/<str:up_or_down>/', views.comment_vote, name='comment-vote'),
-    path('show/<int:pk>/review/', views.review_rate, name='review'),
+    path('show/<int:pk>/review/<int:ck>', views.Review_rate, name='review'),
     path('search/', views.game_search, name='game-search'),
 ]
 
