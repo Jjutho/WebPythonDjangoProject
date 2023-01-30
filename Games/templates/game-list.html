@@ -26,7 +26,12 @@
                 </ul>
                 <h4>Description:</h4>
                 <p class="game-card-description">{{ game.description }}</p>
-                <p><a class="button primary" href="{% url 'game-detail' game.id %}">View Details</a></p>
+                <p>
+                    <a class="button primary" href="{% url 'game-detail' game.id %}">View Details</a>
+                </p>
+                {% if user.is_staff and game.get_reported_comments_count > 0 %}
+                    <p style="color:red;margin-top:30px;">Comments waiting for approval: {{ game.get_reported_comments_count }}</p>
+                {% endif %}
             </div>
         {% endfor %}
     </div>

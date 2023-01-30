@@ -5,6 +5,7 @@ from django.conf import settings
 
 class Game(models.Model):
     class GameGenre(models.TextChoices):
+        EMPTY = '', _('Nothing selected')
         FIRSTPERSONSHOOTER = 'FPS', _('First Person Shooter')
         SIMULATION = 'SIM', _('Simulation')
         CITYBUILDER = 'CB', _('City Builder')
@@ -13,6 +14,7 @@ class Game(models.Model):
         RACINGGAME = 'RC', _('Racing Game')
 
     class AgeRatings(models.TextChoices):
+        EMPTY = '', _('Nothing selected')
         F00 = '0+', _('from 0')
         F06 = '6+', _('from 6')
         F12 = '12+', _('from 12')
@@ -20,17 +22,17 @@ class Game(models.Model):
         F18 = '18+', _('from 18')
 
     # Game title, description, creator and date that the game was released
-    title = models.CharField(max_length=100)
-    description = models.TextField()
-    creator = models.CharField(max_length=100)
-    release_date = models.DateTimeField(blank=True, default=datetime.now)
+    title = models.CharField(blank=False, max_length=100)
+    description = models.TextField(blank=False)
+    creator = models.CharField(blank=False, max_length=100)
+    release_date = models.DateTimeField(blank=False, default=datetime.now)
     cover_image = models.ImageField(upload_to='images/games', default='')
     price = models.IntegerField(default=0, blank=False)
     product_data_pdf = models.FileField(upload_to='documents/games', default='')
 
     # Game genre and age rating
-    genre = models.CharField(max_length=3, choices=GameGenre.choices)
-    age_rating = models.CharField(max_length=3, choices=AgeRatings.choices, default=AgeRatings.F00)
+    genre = models.CharField(max_length=4, choices=GameGenre.choices, default=GameGenre.EMPTY)
+    age_rating = models.CharField(max_length=4, choices=AgeRatings.choices, default=AgeRatings.EMPTY)
 
     # User who entered the game into the DB and when
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='users', related_query_name='user')
@@ -41,6 +43,10 @@ class Game(models.Model):
         verbose_name = 'Game'
         verbose_name_plural = 'Games'
         get_latest_by = "release_date"
+
+    def get_reported_comments_count(self):
+        comments = Comment.objects.filter(approved=False, game=self)
+        return len(comments)
 
     def __str__(self):
         return_string = self.title+', Creator: '+self.creator+', Released: '+self.release_date.strftime("%d.%m.%Y %H:%M:%S")+', Genre: '+self.genre+', Suitable for the ages '+self.age_rating+'; '+'Price:' + self.price
@@ -55,6 +61,7 @@ class Comment(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
+    approved = models.BooleanField(default=True)
 
     class Meta:
         ordering = ['timestamp']
@@ -86,6 +93,12 @@ class Comment(models.Model):
         if up_or_down == 'down':
             U_or_D = 'D'
         vote = Vote.objects.create(up_or_down=U_or_D, user=user, comment=self)
+
+    def report(self):
+        self.approved = False
+
+    def approve(self):
+        self.approved = True
 
     def __str__(self):
         return self.get_comment_prefix() + ' (' + self.user.username + ')'

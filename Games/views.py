@@ -95,6 +95,24 @@ def comment_delete(request, **kwargs):
         return redirect('game-detail', pk=game_id)
 
 @login_required()
+def comment_report(request, **kwargs):
+    comment_id = kwargs['ck']
+    game_id = kwargs['pk']
+    comment = Comment.objects.get(id=comment_id)
+    comment.report()
+    comment.save()
+    return redirect('game-detail', pk=game_id)
+
+@staff_member_required
+def comment_approval(request, **kwargs):
+    comment_id = kwargs['ck']
+    game_id = kwargs['pk']
+    comment = Comment.objects.get(id=comment_id)
+    comment.approve()
+    comment.save()
+    return redirect('game-detail', pk=game_id)
+
+@login_required()
 def comment_vote(request, pk: str, ck: int, up_or_down: str):
     comment_id = int(ck)
     comment = Comment.objects.get(id=comment_id)
@@ -122,21 +140,30 @@ def comment_vote(request, pk: str, ck: int, up_or_down: str):
 
 def game_search(request):
     if request.method == 'POST':
-        search_string_creator = request.POST['creator']
-        game_found = Game.objects.filter(creator__contains=search_string_creator)
 
-        search_string_title = request.POST['title']
-        if search_string_title:
-            game_found = game_found.filter(title__contains=search_string_title)
+        games_found = Game.objects.filter(
+            creator__contains=request.POST['creator'],
+            title__contains=request.POST['title'],
+            genre__contains=request.POST['genre'],
+            age_rating__contains=request.POST['age_rating']
+        )
 
-        if not game_found:
+        query = {
+            request.POST['creator'],
+            request.POST['title'],
+            request.POST['genre'],
+            request.POST['age_rating']
+        }
+
+        if not games_found:
             show_results = False
         else:
             show_results = True
         form_in_function_based_view = SearchForm()
         context = {'form': form_in_function_based_view,
-                   'game_found': game_found,
-                   'show_results': show_results}
+                   'game_found': games_found,
+                   'show_results': show_results,
+                   'query': query}
         return render(request, 'game-search.html', context)
 
     else:
