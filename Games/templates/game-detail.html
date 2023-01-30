@@ -36,7 +36,7 @@
                 <input type="radio" id="3s" name="rate" value="3" /><label for ="3s" class="fas fa-star"></label>
                 <input type="radio" id="2s" name="rate" value="2" /><label for ="2s" class="fas fa-star"></label>
                 <input type="radio" id="1s" name="rate" value="1" /><label for ="1s" class="fas fa-star"></label>
-                <a class="button primary" href="{% url 'review' that_one_game.id %}">Vote</a>
+                <!--<a class="button primary" href="{% comment %}{% url 'review' that_one_game.id %}{% endcomment %}">Vote</a>-->
             </form>
             {% if request.user.is_staff %}
                 <p class="button-delete-container">
