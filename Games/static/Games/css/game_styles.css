@@ -43,16 +43,26 @@
 
 .game-detail-content {
     display: grid;
-    grid-template-columns: 50% 50%;
+    grid-template-columns: 60% 40%;
     column-gap: 50px;
 }
 
 .left-column {
 
 }
+.left-column img{
+    background-position: center center;
+    border: 2px solid #000;
+    border-radius: 12%;
+    margin-bottom: 10px;
+}
 
 .right-column {
-
+    background-color: #E8E2E2;
+    border: 1px solid #000;
+    border-left-width: 2px;
+    border-right: none;
+    padding: 1rem;
 }
 
 .game-detail-content h4 {
@@ -68,8 +78,8 @@
     margin-bottom: 60px;
 }
 
-.game-detail-content .button-delete-container {
-    margin-bottom: 60px;
+.game-detail-content .button-download-container, .add-to-cart-container {
+    margin: 16px 0;
 }
 
 /* GAME-DETAIL: COMMENTS */
@@ -92,12 +102,19 @@
     padding: 20px;
 }
 
-.delete-link {
+.delete-link, .report-link {
     color: red;
     text-decoration: none;
     font-size:0.9em;
 }
-.delete-link:hover {
+.approval-link{
+    color: green;
+    text-decoration: none;
+    font-size:0.9em;
+}
+.delete-link:hover,
+.report-link:hover,
+.approval-link:hover{
     text-decoration: underline;
 }
 
@@ -108,6 +125,9 @@ textarea[name="text"] {
     width:100%;
 }
 
+.empty-button {
+    margin-bottom: 16px;
+}
 
 /* FORM STYLES */
 .game-create-content input,

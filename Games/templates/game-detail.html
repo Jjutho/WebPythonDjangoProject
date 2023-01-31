@@ -28,7 +28,8 @@
             <p class="game-detail-description">{{ that_one_game.description }}</p>
             <p class="game-detail-upload-date">Uploaded by: <i>{{ that_one_game.user }}</i> at <i>{{ that_one_game.upload_date }}</i></p>
 
-            <h4>Price: </h4><span class="price">{{ that_one_game.price }}</span>
+            <h4>Price: </h4>
+            <p class="price">{{ that_one_game.price }}</p>
 
             <div class="input rating">
                 <h4>Your Rating: </h4>
@@ -69,7 +70,7 @@
             <h4 class="comments-heading">Comments:</h4>
             <div class="comments-container">
                 {% if not comments_for_that_one_game %}
-                    <p>Not comments yet. Be the first to comment!</p>
+                    <p>No comments yet. Be the first to comment!</p>
                 {% else %}
                     <ul class="comments-list">
                         {% for comment in comments_for_that_one_game %}

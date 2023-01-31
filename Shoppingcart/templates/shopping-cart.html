@@ -24,8 +24,8 @@
         <br><br>
         <form method="POST">
             {% csrf_token %}
-            <button type="submit" name="empty">Empty the shopping cart</button><br>
-            <button type="submit" name="pay">Pay with credit card</button>
+            <button type="submit" name="empty" class="button secondary empty-button">Empty the shopping cart</button><br>
+            <button type="submit" name="pay" class="button primary">Pay with credit card</button>
         </form>
     {% endif %}
 
