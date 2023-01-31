@@ -15,7 +15,6 @@
 
 {% block logged_in_content %}
     <div class="games-container">
-    {% if game %}
         {% for game in all_the_games %}
             <div class="game-card">
                 <h3>{{ game.title }}</h3>
@@ -36,9 +35,6 @@
                 {% endif %}
             </div>
         {% endfor %}
-    {% else %}
-        <h4>Error 404: Games not found.</h4>
-    {% endif %}
     </div>
     <div class="button-container">
         {% if request.user.is_staff %}
