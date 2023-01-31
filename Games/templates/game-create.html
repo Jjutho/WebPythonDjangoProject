@@ -51,6 +51,9 @@
             <label for="{{ form.releas_date.id_for_label }}">{{ form.release_date.label }}</label><br>
             {{ form.release_date }}<br>
 
+            <label for="{{ form.price.id_for_label }}">{{ form.price.label }}</label><br>
+            {{ form.price }}<br>
+
             <div class="button-container">
                 <button class="button primary" type="submit">Add Game</button>
                 <a class="button secondary" href="{% url 'game-list' %}">Back to all games</a>

@@ -60,6 +60,10 @@
             <input type="{{ form.release_date.field.widget.input_type }}" name="{{ form.release_date.html_name }}" value="{{ form.release_date.value|date:"Y-m-d h:m:s" }}" id="{{ form.release_date.id_for_label }}">
             <br>
 
+            <label for="{{ form.price.id_for_label }}">Price</label><br>
+            <input id="{{ form.price.id_for_label }}" type="{{ form.price.field.widget.input_type }}" name="{{ form.price.html_name }}" placeholder="Price" value="{{ that_one_game.price }}">
+            <br>
+
             <div class="button-container">
                 <button class="button primary" type="submit">Save Game</button>
                 <a class="button secondary" href="{% url 'game-detail' that_one_game.id %}">Cancel</a>

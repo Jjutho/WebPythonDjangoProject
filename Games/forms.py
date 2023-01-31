@@ -5,7 +5,7 @@ class GameForm(forms.ModelForm):
 
     class Meta:
         model = Game
-        fields = ['title', 'description', 'cover_image', 'product_data_pdf', 'creator', 'release_date', 'genre', 'age_rating']
+        fields = ['title', 'description', 'cover_image', 'product_data_pdf', 'creator', 'release_date', 'genre', 'age_rating', 'price']
         widgets = {
             'genre': forms.Select(choices=Game.GameGenre),
             'age_rating': forms.Select(choices=Game.AgeRatings),
@@ -24,7 +24,7 @@ class GameEditForm(forms.ModelForm):
     product_data_pdf = forms.FileField(required=False)
     class Meta:
         model = Game
-        fields = ['title', 'description', 'cover_image', 'product_data_pdf', 'creator', 'release_date', 'genre', 'age_rating']
+        fields = ['title', 'description', 'cover_image', 'product_data_pdf', 'creator', 'release_date', 'genre', 'age_rating', 'price']
         widgets = {
             'genre': forms.Select(choices=Game.GameGenre),
             'age_rating': forms.Select(choices=Game.AgeRatings),
