@@ -49,11 +49,11 @@ class Game(models.Model):
         return len(comments)
 
     def __str__(self):
-        return_string = self.title+', Creator: '+self.creator+', Released: '+self.release_date.strftime("%d.%m.%Y %H:%M:%S")+', Genre: '+self.genre+', Suitable for the ages '+self.age_rating+'; '+'Price:' + self.price
+        return_string = self.title+', Creator: '+self.creator+', Released: '+self.release_date.strftime("%d.%m.%Y %H:%M:%S")+', Genre: '+self.genre+', Suitable for the ages '+self.age_rating+'; '+'Price:' + str(self.price)
         return return_string
 
     def __repr__(self):
-        return_string = self.title+'/'+self.creator+'/'+self.release_date.strftime("%d.%m.%Y %H:%M:%S")+'/description('+str(len(self.description))+')/'+self.genre+'/'+self.age_rating+'/'+self.price+'€'
+        return_string = self.title+'/'+self.creator+'/'+self.release_date.strftime("%d.%m.%Y %H:%M:%S")+'/description('+str(len(self.description))+')/'+self.genre+'/'+self.age_rating+'/'+str(self.price)+'€'
         return return_string
 
 class Comment(models.Model):
