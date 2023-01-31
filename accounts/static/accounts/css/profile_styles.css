@@ -8,3 +8,6 @@
 .profile-container .left-column h4:first-child {
     margin-top: 0;
 }
+.profile-container .logout-container {
+    margin-top: 30px;
+}

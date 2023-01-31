@@ -7,7 +7,8 @@ body {
 
 h1,
 h2,
-h3 {
+h3,
+h4 {
     font-family: "Roboto";
     margin-top:0px;
 }
@@ -76,7 +77,10 @@ button {
     margin: 25px 0;
     padding:20px;
 }
-
+a {
+    text-decoration:none;
+    display:inline-block;
+}
 a.disabled {
     pointer-events: none;
 }
@@ -97,6 +101,15 @@ img {
     grid-template-rows: 100%;
     padding:0 20px;
     height: 100px;
+    font-size: 20px;
+}
+.header-container h4 {
+    margin:0;
+}
+.header-container a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 header {
     position: sticky; top: 20px;

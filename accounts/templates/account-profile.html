@@ -29,6 +29,12 @@
                 <h4>Role:</h4>
                 Staff
             {% endif %}
+            <br>
+            <div class="logout-container">
+                <a class="button primary" href="{% url 'logout' %}">
+                    Logout
+                </a>
+            </div>
         </div>
         <div class="right-column">
             <img src="{{ user.profile_picture.url }}">
