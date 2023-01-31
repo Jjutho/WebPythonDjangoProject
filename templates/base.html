@@ -10,7 +10,44 @@
     <title>{% block title %}Base Title{% endblock %}</title>
 </head>
 <body>
+    <header>
+        <div class="header-container">
+            <div class="logo-container header">
+                LOGO
+            </div>
+            <div class="nav-container header">
+                {% if user.is_authenticated %}
+                    <h4>Hello {{ user.username }}</h4>
+                    <div class="button-container">
+                        <a class="" href="{% url 'game-list' %}">Games</a>
+                        <a class="" href="{% url 'game-search' %}">
+                            <img>Search
+                        </a>
+                        <a class="button primary" href="{% url 'logout' %}">Logout</a>
+                    </div>
+                        <img class="header-profile-picture" width="100" src="{{ request.user.profile_picture.url }}">
+                {% else %}
+                    <div class="button-container">
+                        <a class="button secondary" href="{% url 'signup' %}">Sign Up</a>
+                        <a class="button primary" href="{% url 'login' %}">Login</a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </header>
     {% block heading %}<h1>Base Intro</h1>H1>{% endblock %}
     {% block content %}<p>Base Content</p>{% endblock %}
+    <footer>
+        <div class="footer-container">
+            <div class="logo-container footer">
+                <img class="logo-placeholder" src="{{ request.user.profile_picture.url }}">
+            </div>
+            <div class="nav-container footer">
+                <a class="" href="{% url 'home' %}">Back to home</a>
+                <a class="" href="{% url 'home' %}">Data privacy</a>
+                <a class="" href="{% url 'home' %}">Imprint</a>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>

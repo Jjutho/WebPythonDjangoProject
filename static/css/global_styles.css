@@ -82,3 +82,54 @@ button {
 a.disabled {
     pointer-events: none;
 }
+
+/* HEADER START */
+.header-container {
+    display: grid;
+    grid-template-columns: 20% 80%;
+    grid-template-rows: 100%;
+    padding:20px;
+}
+header {
+    position: sticky; top: 20px;
+    background: #fff;
+    margin: -20px;
+    transform:translateY(-20px);
+}
+.nav-container.header {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    align-items: center;
+    gap:20px;
+}
+.nav-container.header .button-container {
+    align-items: center;
+    margin: 0px;
+}
+.logo-container.header{
+    display: flex;
+    align-items: center;
+}
+/* HEADER END */
+
+/* FOOTER START */
+.footer-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 0;
+    gap: 30px;
+    border: red solid 1px;
+}
+.logo-container.footer img {
+    height: 100px;
+    width: auto;
+}
+.nav-container.footer {
+    display: flex;
+    gap: 15px;
+}
+/* FOOTER END */

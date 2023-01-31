@@ -39,8 +39,6 @@
         {% if request.user.is_staff %}
             <a class="button primary" href="{% url 'game-create' %}">Add a new game</a>
         {% endif %}
-        <a class="button secondary" href="{% url 'game-search' %}">Search games</a>
-        <a class="button secondary" href="{% url 'home' %}">Back to Home</a>
     </div>
 {% endblock %}
 

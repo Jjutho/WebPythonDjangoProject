@@ -12,20 +12,11 @@
 {% block content %}
     {% if user.is_authenticated %}
         {% block logged_in_content %}
-            <h2>Hello {{ user.username }}</h2>
-            <div class="button-container">
-                <a class="button primary" href="{% url 'game-list' %}">Show me the games</a>
-                <a class="button secondary" href="{% url 'game-search' %}">Search games</a>
-                <a class="button secondary" href="{% url 'logout' %}">Logout</a>
-            </div>
+
         {% endblock %}
     {% else %}
         {% block not_logged_in_content %}
-            <h2>You shall not pass</h2>
-            <div class="button-container">
-                <a class="button primary" href="{% url 'login' %}">Login</a>
-                <a class="button secondary" href="{% url 'signup' %}">Sign Up</a>
-            </div>
+
         {% endblock %}
     {% endif %}
 {% endblock %}
