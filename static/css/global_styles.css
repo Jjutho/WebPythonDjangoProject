@@ -141,9 +141,12 @@ header {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 30px 0;
+    /*padding: 30px 0;
     gap: 30px;
-    border: red solid 1px;
+    border: red solid 1px;*/
+    padding: 1rem;
+    background-color: #333;
+    color: #fff;
 }
 .logo-container.footer img {
     height: 100px;
@@ -152,5 +155,9 @@ header {
 .nav-container.footer {
     display: flex;
     gap: 15px;
+}
+.nav-container.footer a{
+    color: #fff;
+    text-decoration: none;
 }
 /* FOOTER END */
