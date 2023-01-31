@@ -12,11 +12,19 @@
 {% block content %}
     {% if user.is_authenticated %}
         {% block logged_in_content %}
-
+            <p>Thank you for visiting our shop! You will find a wide variety of games of different genres and developers here.</p>
+            <p>Don't hesitate to look around and buy your next favorite game!</p>
+            <a class="button primary" href="{% url 'game-list' %}">All games</a>
         {% endblock %}
     {% else %}
         {% block not_logged_in_content %}
-
+            <p>Thank you for visiting our shop! You will find a wide variety of games of different genres and developers here.</p>
+            <p>Don't hesitate to look around and buy your next favorite game!</p>
+            <p>But before that please signup or login, this is necessary to protect our page from those awful DDOS-attacks!</p>
+            <div class="button-container" style="padding-left:0;">
+                <a class="button secondary" href="{% url 'signup' %}">Sign Up</a>
+                <a class="button primary" href="{% url 'login' %}">Login</a>
+            </div>
         {% endblock %}
     {% endif %}
 {% endblock %}

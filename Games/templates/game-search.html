@@ -25,7 +25,7 @@
     <br>
 
     {% if show_results %}
-        <b>Found games: {{ query }}</b><br>
+        <b>Found games:</b><br>
         <ul>
         {% for game in game_found %}
             <a href="{% url 'game-detail' game.id %}"><b>{{ game.title }}</b></a><br>
@@ -34,7 +34,7 @@
         {% endfor %}
         </ul>
     {% else %}
-        <b>No matching games found for {{ query }}.</b><br>
+        <b>No matching games found.</b><br>
     {% endif %}
     <div class="button-container">
         <a class="button primary" href="{% url 'game-list' %}">Show me all games</a>

@@ -16,8 +16,8 @@
 {% block logged_in_content %}
     <div class="game-detail-content">
         <div class="left-column">
-            <img width="300" src="{{ that_one_game.cover_image.url }}">
-            <h4>Game Information:</h4>
+            <h2>Game Information:</h2>
+            <img width="300" src="{% if that_one_game.cover_image %}{{ that_one_game.cover_image.url }}{% endif %}">
             <ul>
                 <li>Release date: {{ that_one_game.release_date }}</li>
                 <li>Game Creator: {{ that_one_game.creator }}</li>

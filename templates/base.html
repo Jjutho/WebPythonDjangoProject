@@ -5,6 +5,7 @@
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/global_styles.css' %}">
     <script defer src="{% static 'js/sticky-header.js' %}"></script>
+    <link rel="shortcut icon" type="image/svg" href="/media/images/icons/favicon.ico"/>
     {% block css %}
     {% endblock %}
     {% load static %}
@@ -16,7 +17,7 @@
         <div class="header-container">
             <div class="logo-container header">
                 <a href="{% url 'home' %}">
-                    LOGO
+                    <img width="150" src="/media/images/icons/ggames-logo-final.svg">
                 </a>
             </div>
             <div class="nav-container header">
@@ -58,7 +59,7 @@
     <footer>
         <div class="footer-container">
             <div class="logo-container footer">
-                <img class="logo-placeholder" src="">
+                <img width="200" src="/media/images/icons/ggames-logo-final-white.svg">
             </div>
             <div class="nav-container footer">
                 <a class="" href="{% url 'home' %}">Back to home</a>
