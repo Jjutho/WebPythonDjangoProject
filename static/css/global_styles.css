@@ -112,6 +112,10 @@ img {
     align-items: center;
     justify-content: center;
 }
+.header-container a:hover{
+    color: hsla(342, 92%, 46%, 1);
+    transition: .3s;
+}
 header {
     position: sticky;
     top: -1px;
@@ -150,6 +154,10 @@ header.is-pinned {
     background-size: cover;
 
     border: 2px solid #343434;
+}
+.user:hover{
+    border: 2px solid hsla(342, 92%, 46%, 1);
+    transition: .3s;
 }
 /* HEADER END */
 

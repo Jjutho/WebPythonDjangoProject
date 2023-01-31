@@ -15,11 +15,11 @@
 {% endblock %}
 
 {% block logged_in_content %}
-<h2>Search Game</h2>
+<h3>What are you looking for?</h3>
     <form method="POST">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Search</button>
+        <button type="submit" class="button primary">Search</button>
     </form>
     <br>
     <br>
