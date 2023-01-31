@@ -186,4 +186,8 @@ header.is-pinned {
     color: #fff;
     text-decoration: none;
 }
+.nav-container.footer a:hover{
+    color: hsla(342, 92%, 46%, 1);
+    transition: .3s;
+}
 /* FOOTER END */
