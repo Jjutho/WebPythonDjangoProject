@@ -17,15 +17,25 @@
             </div>
             <div class="nav-container header">
                 {% if user.is_authenticated %}
-                    <h4>Hello {{ user.username }}</h4>
+                    <h4>
+                        Hello {{ user.username }}
+                        {% if user.is_superuser %}
+                            (Admin)
+                        {% elif user.is_staff %}
+                            (Staff)
+                        {% endif %}
+                    </h4>
                     <div class="button-container">
                         <a class="" href="{% url 'game-list' %}">Games</a>
                         <a class="" href="{% url 'game-search' %}">
-                            <img>Search
+                            Search
+                        </a>
+                        <a class="" href="{% url 'cart' %}">
+                            Cart
                         </a>
                         <a class="button primary" href="{% url 'logout' %}">Logout</a>
                     </div>
-                        <img class="header-profile-picture" width="100" src="{{ request.user.profile_picture.url }}">
+                    <a href="{% url 'profile' %}"><img class="header-profile-picture" width="100" src="{% if user.profile_picture %}{{ user.profile_picture.url }}{% else %}/media/images/users/defaultUser.png{% endif %}"></a>
                 {% else %}
                     <div class="button-container">
                         <a class="button secondary" href="{% url 'signup' %}">Sign Up</a>
@@ -42,7 +52,7 @@
     <footer>
         <div class="footer-container">
             <div class="logo-container footer">
-                <img class="logo-placeholder" src="{{ request.user.profile_picture.url }}">
+                <img class="logo-placeholder" src="">
             </div>
             <div class="nav-container footer">
                 <a class="" href="{% url 'home' %}">Back to home</a>

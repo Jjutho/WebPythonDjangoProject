@@ -1,0 +1,10 @@
+.profile-container {
+    display: grid;
+    grid-template-columns: 50% 50%;
+}
+.profile-container .right-column img {
+    max-width: 100%;
+}
+.profile-container .left-column h4:first-child {
+    margin-top: 0;
+}

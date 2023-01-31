@@ -27,8 +27,11 @@
             <h4>Description:</h4>
             <p class="game-detail-description">{{ that_one_game.description }}</p>
             <p class="game-detail-upload-date">Uploaded by: <i>{{ that_one_game.user }}</i> at <i>{{ that_one_game.upload_date }}</i></p>
+
+            <h4>Price: </h4><span class="price">{{ that_one_game.price }}</span>
+
             <div class="input rating">
-                <p>Your Rating: </p>
+                <h4>Your Rating: </h4>
             </div>
             <form class="review-form" method="GET" action="/review">
                 <input type="radio" id="5s" name="rate" value="5" /><label for ="5s" class="fas fa-star"></label>

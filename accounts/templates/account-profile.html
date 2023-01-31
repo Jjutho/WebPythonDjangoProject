@@ -1,11 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>User Profile</title>
-</head>
-<body>
-    <h1>Profile</h1>
-    <p>{{ request.user.username }}</p>
-</body>
-</html>
+{% extends "home.html" %}
+
+{% block title %}
+    Profile
+{% endblock %}
+
+{% block css %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'accounts/css/profile_styles.css' %}">
+{% endblock %}
+
+{% block heading %}
+    <h1>Hello {{ user.username }}</h1>
+{% endblock %}
+
+{% block logged_in_content %}
+    <div class="profile-container">
+        <div class="left-column">
+            <h4>Username:</h4>
+            <p>{{ user.username }}</p>
+            <h4>Email:</h4>
+            <p>{{ user.email }}</p>
+            <h4>Age:</h4>
+            <p>{{ user.age }}</p>
+            {% if user.is_superuser %}
+                <h4>Role:</h4>
+                Admin
+            {% elif user.is_staff %}
+                <h4>Role:</h4>
+                Staff
+            {% endif %}
+        </div>
+        <div class="right-column">
+            <img src="{{ user.profile_picture.url }}">
+        </div>
+    </div>
+{% endblock %}
