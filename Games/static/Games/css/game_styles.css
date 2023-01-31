@@ -19,6 +19,10 @@
 .game-card:hover {
     box-shadow: 5px 10px 7px rgba(0,0,0,0.3);
 }
+.game-list-cover {
+    max-height: 300px;
+    width: auto;
+}
 @media (max-width:768px) {
     .game-card {
         flex: 1 1 100%;
@@ -44,7 +48,6 @@
 .game-detail-content {
     display: grid;
     grid-template-columns: 60% 40%;
-    column-gap: 50px;
 }
 
 .left-column {
@@ -60,9 +63,9 @@
 .right-column {
     background-color: #E8E2E2;
     border: 1px solid #000;
-    border-left-width: 2px;
-    border-right: none;
+    border-left-width: 5px;
     padding: 1rem;
+    height: fit-content;
 }
 
 .game-detail-content h4 {
