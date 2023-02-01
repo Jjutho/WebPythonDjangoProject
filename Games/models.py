@@ -1,7 +1,11 @@
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from datetime import datetime
 from django.conf import settings
+from django import template
+
+register = template.Library()
 
 class Game(models.Model):
     class GameGenre(models.TextChoices):
@@ -62,6 +66,7 @@ class Comment(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
     approved = models.BooleanField(default=True)
+    rating = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(5)])
 
     class Meta:
         ordering = ['timestamp']

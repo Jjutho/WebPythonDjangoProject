@@ -17,6 +17,9 @@
     <div class="game-detail-content">
         <div class="left-column">
             <h2>Game Information:</h2>
+            {% load define_tags %}
+            {% get_total_rating that_one_game as total_rating %}
+            <h3>Rating: {{ total_rating }} / 5</h3>
             <img width="300" src="{% if that_one_game.cover_image %}{{ that_one_game.cover_image.url }}{% endif %}">
             <ul>
                 <li>Release date: {{ that_one_game.release_date }}</li>
@@ -29,19 +32,8 @@
             <p class="game-detail-upload-date">Uploaded by: <i>{{ that_one_game.user }}</i> at <i>{{ that_one_game.upload_date }}</i></p>
 
             <h4>Price: </h4>
-            <p class="price">{{ that_one_game.price }}</p>
+            <p class="price">{{ that_one_game.price }} €</p>
 
-            <div class="input rating">
-                <h4>Your Rating: </h4>
-            </div>
-            <form class="review-form" method="GET" action="/review">
-                <input type="radio" id="5s" name="rate" value="5" /><label for ="5s" class="fas fa-star"></label>
-                <input type="radio" id="4s" name="rate" value="4" /><label for ="4s" class="fas fa-star"></label>
-                <input type="radio" id="3s" name="rate" value="3" /><label for ="3s" class="fas fa-star"></label>
-                <input type="radio" id="2s" name="rate" value="2" /><label for ="2s" class="fas fa-star"></label>
-                <input type="radio" id="1s" name="rate" value="1" /><label for ="1s" class="fas fa-star"></label>
-                <!--<a class="button primary" href="{% comment %}{% url 'review' that_one_game.id %}{% endcomment %}">Vote</a>-->
-            </form>
             {% if request.user.is_staff %}
                 <p class="button-delete-container">
                     <a class="button primary button-delete" href="{% url 'game-delete' that_one_game.id %}">Delete Game</a>
@@ -67,15 +59,16 @@
             </div>
         </div>
         <div class="right-column">
-            <h4 class="comments-heading">Comments:</h4>
+            <h4 class="comments-heading">Reviews:</h4>
             <div class="comments-container">
                 {% if not comments_for_that_one_game %}
-                    <p>No comments yet. Be the first to comment!</p>
+                    <p>No reviews yet. Be the first to review!</p>
                 {% else %}
                     <ul class="comments-list">
                         {% for comment in comments_for_that_one_game %}
                                 <li class="comment-list-element">
                                     <div>
+                                        <p>{% if user.username == comment.user.username %}Your rating: {% else %}Rating: {% endif %}<strong>{{ comment.rating }}</strong></p>
                                         {% if comment.approved or user.is_staff %}
                                             <p class="comment-text">{{ comment.text }}</p>
                                         {% else %}
@@ -107,13 +100,19 @@
                         {% endfor %}
                     </ul>
                 {% endif %}
-                {% if not request.user.is_staff %}
-                <b>Do you want to leave a comment?</b>
-                <form method="POST">
-                    {% csrf_token %}
-                    {{ comment_form.as_p }}
-                    <button class="button primary button-submit-comment" type="submit" name="action" value="comment">Add comment</button>
-                </form>
+                {% load define_tags %}
+                {% has_user_reviewed that_one_game user as has_user_reviewed%}
+                {% if not request.user.is_staff and has_user_reviewed == False %}
+                    <b>Do you want to leave a review?</b><br><br><br>
+                    <form method="POST">
+                        {% csrf_token %}
+                        <label for="{{ comment_form.rating.id_for_label }}"><strong>Your rating (1-5):</strong></label><br><br>
+                        <input id="{{ comment_form.rating.id_for_label }}" type="number" name="{{ comment_form.rating.html_name }}" min="1" max="5" placeholder="1"><br>
+                        <br>
+                        <label for="{{ comment_form.text.id_for_label }}"><strong>Your thoughts:</strong></label>
+                        <textarea rows="10" cols="40" id="{{ comment_form.text.id_for_label }}" type="{{ comment_form.text.field.widget.input_type }}" name="{{ comment_form.text.html_name }}" placeholder="Write your review here..."></textarea><br><br>
+                        <button class="button primary button-submit-comment" type="submit" name="action" value="comment">Add review</button>
+                    </form>
                 {% endif %}
             </div>
         </div>

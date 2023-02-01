@@ -171,17 +171,3 @@ def game_search(request):
         context = {'form': form_in_function_based_view,
                    'show_results': False}
         return render(request, 'game-search.html', context)
-
-def review_rate(request, **kwargs):
-    if request.method == "GET":
-        game_id = game_id = kwargs['pk']
-        game = Game.objects.get(id=game_id)
-        rate = request.GET.get('rate')
-        user = request.user
-        Review(user=user, game= game_id, rate=rate).save()
-        return redirect('game-detail', id=game_id)
-
-       # if requested.method == 'POST':
-        #    that.one.game.voted()
-         #   return redirect('game-detail')
-
