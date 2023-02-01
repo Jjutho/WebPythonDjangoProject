@@ -19,7 +19,11 @@
             <h2>Game Information:</h2>
             {% load define_tags %}
             {% get_total_rating that_one_game as total_rating %}
-            <h3>Rating: {{ total_rating }} / 5</h3>
+            {% if total_rating == 99.9 %}
+                <h3>Rating: No ratings yet.</h3>
+            {% else %}
+                <h3>Rating: {{ total_rating }} / 5</h3>
+            {% endif %}
             <img width="300" src="{% if that_one_game.cover_image %}{{ that_one_game.cover_image.url }}{% endif %}">
             <ul>
                 <li>Release date: {{ that_one_game.release_date }}</li>

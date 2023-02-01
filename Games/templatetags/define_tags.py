@@ -22,7 +22,10 @@ def get_total_rating(game):
     for comment in comments:
         rating += comment.rating
 
-    total_rating = round(rating / len(comments), 1)
+    if not rating == 0:
+        total_rating = round(rating / len(comments), 1)
+    else:
+        return 99.9
 
     Game.objects.filter(pk=game.id).update(total_rating=total_rating)
 
