@@ -2,7 +2,7 @@ import sys
 sys.path.append('../Games')
 
 from django import template
-from Games.models import Comment
+from Games.models import Comment, Game
 
 register = template.Library()
 
@@ -22,4 +22,8 @@ def get_total_rating(game):
     for comment in comments:
         rating += comment.rating
 
-    return round(rating / len(comments), 1)
+    total_rating = round(rating / len(comments), 1)
+
+    Game.objects.filter(pk=game.id).update(total_rating=total_rating)
+
+    return total_rating

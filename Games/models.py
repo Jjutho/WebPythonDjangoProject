@@ -33,6 +33,7 @@ class Game(models.Model):
     cover_image = models.ImageField(upload_to='images/games', default='')
     price = models.IntegerField(default=0, blank=False)
     product_data_pdf = models.FileField(upload_to='documents/games', default='')
+    total_rating = models.DecimalField(default=0, decimal_places=1, max_digits=2, validators=[MinValueValidator(0), MaxValueValidator(5)])
 
     # Game genre and age rating
     genre = models.CharField(max_length=4, choices=GameGenre.choices, default=GameGenre.EMPTY)
@@ -125,13 +126,3 @@ class Vote(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
-
-class Review(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    game = models.ForeignKey(Game, on_delete=models.CASCADE)
-    rate = models.IntegerField(default=0)
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return str(self.id)
-

@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect
 
 from Shoppingcart.models import ShoppingCart
 from .forms import GameForm, GameEditForm, CommentForm, SearchForm
-from .models import Game, Comment, Vote, Review
+from .models import Game, Comment, Vote
 
 def game_list(request):
     all_games = Game.objects.all()
@@ -145,25 +145,20 @@ def game_search(request):
             creator__contains=request.POST['creator'],
             title__contains=request.POST['title'],
             genre__contains=request.POST['genre'],
-            age_rating__contains=request.POST['age_rating']
+            age_rating__contains=request.POST['age_rating'],
+            total_rating__gte=request.POST['total_rating']
         )
-
-        query = {
-            request.POST['creator'],
-            request.POST['title'],
-            request.POST['genre'],
-            request.POST['age_rating']
-        }
 
         if not games_found:
             show_results = False
         else:
             show_results = True
         form_in_function_based_view = SearchForm()
-        context = {'form': form_in_function_based_view,
-                   'game_found': games_found,
-                   'show_results': show_results,
-                   'query': query}
+        context = {
+            'form': form_in_function_based_view,
+            'game_found': games_found,
+            'show_results': show_results
+        }
         return render(request, 'game-search.html', context)
 
     else:

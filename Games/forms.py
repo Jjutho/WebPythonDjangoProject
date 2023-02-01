@@ -55,4 +55,4 @@ class SearchForm(forms.ModelForm):
 
     class Meta:
         model = Game
-        fields = ['creator', 'title', 'genre', 'age_rating']
+        fields = ['creator', 'title', 'genre', 'age_rating', 'total_rating']

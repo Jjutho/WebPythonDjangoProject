@@ -29,6 +29,7 @@
         <ul>
         {% for game in game_found %}
             <a href="{% url 'game-detail' game.id %}"><b>{{ game.title }}</b></a><br>
+            <p>Rating: {{ game.total_rating }}</p>
             <i>Game Creator: </i>{{ game.creator }} / {{ game.get_genre_display }} / <i>Released: </i>{{ game.release_date }}<br>
             <br>
         {% endfor %}
