@@ -80,13 +80,13 @@
                                         {% endif %}
                                         <p class="comment-meta">By <i>{{ comment.user.username }}</i> on <i>{{ comment.timestamp }}</i>
                                             {% if user.username == comment.user.username or user.is_staff %}
-                                                <a class="delete-link" href="{% url 'comment-delete' that_one_game.id comment.id %}">Delete comment</a>
+                                                <a class="delete-link" href="{% url 'comment-delete' that_one_game.id comment.id %}">Delete review</a>
                                             {% endif %}
                                             {% if comment.approved and not user.is_staff and not user.username == comment.user.username%}
-                                                <a class="report-link" href="{% url 'comment-report' that_one_game.id comment.id %}">Report comment</a>
+                                                <a class="report-link" href="{% url 'comment-report' that_one_game.id comment.id %}">Report review</a>
                                             {% endif %}
                                             {% if not comment.approved and user.is_staff %}
-                                                <a class="approval-link" href="{% url 'comment-approval' that_one_game.id comment.id %}">Approve comment</a>
+                                                <a class="approval-link" href="{% url 'comment-approval' that_one_game.id comment.id %}">Approve review</a>
                                             {% endif %}
                                         </p>
                                         <div class="comment-votes">
